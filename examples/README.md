@@ -6,15 +6,15 @@
 
 ```text
 examples/
-└── 01-pi-mono/
-    ├── 03-minimal-agent-runtime/
-    │   └── index.mjs
-    ├── 04-context-boundary/
-    │   └── index.mjs
-    ├── 05-event-driven-state/
-    │   └── index.mjs
-    └── 06-run-control/
-        └── index.mjs
+├── 01-pi-mono/
+│   ├── 03-minimal-agent-runtime/index.mjs
+│   ├── 04-context-boundary/index.mjs
+│   ├── 05-event-driven-state/index.mjs
+│   └── 06-run-control/index.mjs
+└── 03-codex-cli/
+    └── 06-escalation-lab/
+        ├── README.md
+        └── probe.sh
 ```
 
 | 阶段 | 课程 | 示例 | 运行方式 |
@@ -23,7 +23,8 @@ examples/
 | Pi Mono | [第 4 课：Transcript 与 Model Context](../docs/01-pi-mono/04-transcript-and-model-context.md) | [`index.mjs`](01-pi-mono/04-context-boundary/index.mjs) | `node examples/01-pi-mono/04-context-boundary/index.mjs` |
 | Pi Mono | [第 5 课：Event 驱动 Agent State](../docs/01-pi-mono/05-event-driven-agent-state.md) | [`index.mjs`](01-pi-mono/05-event-driven-state/index.mjs) | `node examples/01-pi-mono/05-event-driven-state/index.mjs` |
 | Pi Mono | [第 6 课：Abort、Steering 与 Follow-up](../docs/01-pi-mono/06-abort-steering-follow-up.md) | [`index.mjs`](01-pi-mono/06-run-control/index.mjs) | `node examples/01-pi-mono/06-run-control/index.mjs` |
+| Codex CLI | [第 6 课：权限提升实验与阶段复盘](../docs/03-codex-cli/06-escalation-experiment-phase-review.md) | [`probe.sh`](03-codex-cli/06-escalation-lab/probe.sh) | `examples/03-codex-cli/06-escalation-lab/probe.sh help` |
 
-在命令末尾加入 `--invalid-args`，可以运行同一课程的工具参数校验失败场景。
+Pi Mono 示例在命令末尾加入 `--invalid-args`，可以运行同一课程的工具参数校验失败场景。
 
 后续示例继续使用 `<阶段编号>-<阶段名>/<课程编号>-<主题>/`，一节课需要多个文件时也只放在自己的课程目录中。

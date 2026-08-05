@@ -15,12 +15,12 @@ Pi Mono
 
 ## 当前进度
 
-学习进度：**第二阶段 · OpenCode 课程已完成**
+学习进度：**第三阶段 · Codex CLI 教材已完成，等待个人实验与掌握确认**
 
-- 阶段复盘：[第 7 课：完整 Coding Task 端到端追踪与阶段复盘](docs/02-opencode/07-coding-task-end-to-end-review.md)
-- 下一阶段：[Codex CLI · 生产 Sandbox](docs/03-codex-cli/README.md)
+- 阶段复盘：[权限提升实验与第三阶段复盘](docs/03-codex-cli/06-escalation-experiment-phase-review.md)
+- 已完成教材：[Codex CLI · 生产级 Sandbox](docs/03-codex-cli/README.md)
+- 下一阶段：[Claude Code · 高级 Context、Memory 与 Multi-Agent](docs/04-claude-code/README.md)
 - 说明：个人掌握清单保留未勾选，不由文档完成状态代替
-- 全部课程：[OpenCode 阶段目录](docs/02-opencode/README.md)
 
 ## 文档目录
 
@@ -42,6 +42,9 @@ Pi Mono
 - `源码`：已经从实现中验证。
 - `文档`：来自项目官方文档。
 - `实验`：已经通过实际运行验证。
-- `推测`：尚未验证，不能当作结论。
+- `实验步骤`：提供了可复现方法，但尚未代替学习者执行。
+- `结论`：基于前述证据形成的阶段性理解。
+- `限制`：已经确认的适用边界或平台差异。
+- `未验证` / `推测`：证据仍不足，不能当作已验证结论。
 
-本地固定版本的上游源码统一放在 `sources/`，学习文档不会修改上游实现。
+本地固定版本的上游源码统一放在 `sources/`。
