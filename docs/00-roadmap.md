@@ -14,7 +14,8 @@
 第三阶段：Codex CLI
     ↓  理解生产级 Sandbox 与安全控制
 第四阶段：Claude Code
-       理解高级 Context、Memory 与 Multi-Agent
+       以高级 Context、Memory、Multi-Agent 为重点
+       完整研究 Loop、Context、Tools、State、Safety、Extension
 ```
 
 这四个阶段是为了学习而安排的观察顺序，并不表示后一个项目在实现上严格包含前一个项目的全部设计。
@@ -57,7 +58,7 @@
 1. [Pi Mono：最小 Agent Runtime](01-pi-mono/README.md)
 2. [OpenCode：完整 Coding Agent](02-opencode/README.md)
 3. [Codex CLI：生产级 Sandbox](03-codex-cli/README.md)
-4. [Claude Code：Context、Memory 与 Multi-Agent](04-claude-code/README.md)
+4. [Claude Code：完整 Agent Harness](04-claude-code/README.md)
 
 ## 每次学习的固定节奏
 
