@@ -15,12 +15,12 @@ Pi Mono
 
 ## 当前进度
 
-学习进度：**第一阶段 · Pi Mono 课程已完成**
+学习进度：**第二阶段 · OpenCode 课程已完成**
 
-- 阶段复盘：[第 7 课：第一阶段复盘](docs/01-pi-mono/07-phase-review.md)
-- 下一阶段：[OpenCode · 完整 Coding Agent](docs/02-opencode/README.md)
+- 阶段复盘：[第 7 课：完整 Coding Task 端到端追踪与阶段复盘](docs/02-opencode/07-coding-task-end-to-end-review.md)
+- 下一阶段：[Codex CLI · 生产 Sandbox](docs/03-codex-cli/README.md)
 - 说明：个人掌握清单保留未勾选，不由文档完成状态代替
-- 全部课程：[Pi Mono 阶段目录](docs/01-pi-mono/README.md)
+- 全部课程：[OpenCode 阶段目录](docs/02-opencode/README.md)
 
 ## 文档目录
 
