@@ -1,6 +1,6 @@
 # 第 7 课：Session、Transcript、Resume、Fork 与 Rewind
 
-[返回本阶段目录](README.md) · [上一课](06-tool-contract-registry-execution.md) · [官方 Sessions 文档](https://code.claude.com/docs/en/sessions) · [课程实验](../../examples/04-claude-code/07-session-dag/index.mjs)
+[返回本阶段目录](README.md) · [上一课](06-tool-contract-registry-execution.md) · [官方 Sessions 文档](https://code.claude.com/docs/en/sessions) · [课程实验](../examples/04-claude-code/07-session-dag/index.mjs)
 
 ## 核心问题
 

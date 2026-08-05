@@ -1,6 +1,6 @@
 # 第 9 课：Auto Memory、Recall 与长期知识治理
 
-[返回本阶段目录](README.md) · [上一课](08-permissions-hooks-bash-sandbox.md) · [官方 Memory 文档](https://code.claude.com/docs/en/memory) · [课程实验](../../examples/04-claude-code/09-memory-policy/index.mjs)
+[返回本阶段目录](README.md) · [上一课](08-permissions-hooks-bash-sandbox.md) · [官方 Memory 文档](https://code.claude.com/docs/en/memory) · [课程实验](../examples/04-claude-code/09-memory-policy/index.mjs)
 
 ## 核心问题
 

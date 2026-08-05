@@ -1,6 +1,6 @@
 # 第 11 课：Agent Teams、Tasks、Mailbox 与权限同步
 
-[返回本阶段目录](README.md) · [上一课](10-subagent-lifecycle-context-isolation.md) · [官方 Agent Teams 文档](https://code.claude.com/docs/en/agent-teams) · [课程实验](../../examples/04-claude-code/11-team-coordination/index.mjs)
+[返回本阶段目录](README.md) · [上一课](10-subagent-lifecycle-context-isolation.md) · [官方 Agent Teams 文档](https://code.claude.com/docs/en/agent-teams) · [课程实验](../examples/04-claude-code/11-team-coordination/index.mjs)
 
 ## 核心问题
 

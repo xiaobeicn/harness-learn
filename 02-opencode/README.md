@@ -1,6 +1,6 @@
 # 第二阶段：OpenCode — 完整 Coding Agent
 
-[返回首页](../../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
+[返回首页](../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
 
 阶段状态：**课程内容已完成；个人掌握清单保留未勾选**
 

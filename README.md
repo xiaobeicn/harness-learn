@@ -1,6 +1,6 @@
 # Agent Harness 学习笔记
 
-这是一套从最小 Agent Runtime 出发，逐步学习完整 Coding Agent、生产级 Sandbox，以及以高级 Context、Memory、Multi-Agent 为重点的完整 Agent Harness 的公开学习笔记。
+这是一套从最小 Agent Runtime 出发，逐步学习完整 Coding Agent、生产级 Sandbox，最终研究完整 Claude Code Harness 架构的公开学习笔记。
 
 ## 学习顺序
 
@@ -11,29 +11,29 @@ Pi Mono
   → Claude Code
 ```
 
-完整目标和阶段关系见[学习路线](docs/00-roadmap.md)。
+完整目标和阶段关系见[学习路线](00-roadmap.md)。
 
 ## 当前进度
 
 学习进度：**第四阶段 · Claude Code 教材已完成，等待个人实验与掌握确认**
 
-- 阶段复盘：[Plugin、MCP、Hooks、Skills 扩展与端到端复盘](docs/04-claude-code/12-extension-system-end-to-end-review.md)
-- 已完成教材：[Claude Code · 完整 Agent Harness](docs/04-claude-code/README.md)
-- 最终对照：[四个 Agent Harness 横向对照](docs/comparison.md)
+- 阶段复盘：[Plugin、MCP、Hooks、Skills 扩展与端到端复盘](04-claude-code/12-extension-system-end-to-end-review.md)
+- 已完成教材：[Claude Code · 完整 Agent Harness](04-claude-code/README.md)
+- 最终对照：[四个 Agent Harness 横向对照](comparison.md)
 - 说明：个人掌握清单保留未勾选，不由文档完成状态代替
 
 ## 文档目录
 
 | 内容 | 入口 |
 | --- | --- |
-| 总体路线与学习方法 | [docs/00-roadmap.md](docs/00-roadmap.md) |
-| 第一阶段：Pi Mono | [docs/01-pi-mono/README.md](docs/01-pi-mono/README.md) |
-| 第二阶段：OpenCode | [docs/02-opencode/README.md](docs/02-opencode/README.md) |
-| 第三阶段：Codex CLI | [docs/03-codex-cli/README.md](docs/03-codex-cli/README.md) |
-| 第四阶段：Claude Code 完整 Harness | [docs/04-claude-code/README.md](docs/04-claude-code/README.md) |
+| 总体路线与学习方法 | [00-roadmap.md](00-roadmap.md) |
+| 第一阶段：Pi Mono | [01-pi-mono/README.md](01-pi-mono/README.md) |
+| 第二阶段：OpenCode | [02-opencode/README.md](02-opencode/README.md) |
+| 第三阶段：Codex CLI | [03-codex-cli/README.md](03-codex-cli/README.md) |
+| 第四阶段：Claude Code 完整 Harness | [04-claude-code/README.md](04-claude-code/README.md) |
 | 课程示例 | [examples/README.md](examples/README.md) |
-| 四个 Harness 横向对照 | [docs/comparison.md](docs/comparison.md) |
-| 单次学习记录模板 | [docs/learning-log-template.md](docs/learning-log-template.md) |
+| 四个 Harness 横向对照 | [comparison.md](comparison.md) |
+| 单次学习记录模板 | [learning-log-template.md](learning-log-template.md) |
 
 ## 阅读约定
 

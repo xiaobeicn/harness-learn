@@ -1,6 +1,6 @@
 # 第 5 课：Event 驱动 Agent State
 
-[上一课](04-transcript-and-model-context.md) · [返回本阶段目录](README.md) · [运行代码](../../examples/01-pi-mono/05-event-driven-state/index.mjs)
+[上一课](04-transcript-and-model-context.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/05-event-driven-state/index.mjs)
 
 ## 核心问题
 
@@ -26,7 +26,7 @@ Loop 不需要导入任何 UI 代码，Subscriber 也不需要进入 loop 内部
 
 ## 运行实验
 
-代码位于 [`examples/01-pi-mono/05-event-driven-state/index.mjs`](../../examples/01-pi-mono/05-event-driven-state/index.mjs)。
+代码位于 [`examples/01-pi-mono/05-event-driven-state/index.mjs`](../examples/01-pi-mono/05-event-driven-state/index.mjs)。
 
 ```bash
 node examples/01-pi-mono/05-event-driven-state/index.mjs

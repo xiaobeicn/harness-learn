@@ -1,6 +1,6 @@
 # 第三阶段：Codex CLI — 生产级 Sandbox
 
-[返回首页](../../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
+[返回首页](../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
 
 阶段状态：**教材已完成（6 / 6 课）；个人掌握清单待学习者验证**
 
@@ -113,4 +113,4 @@
 
 ## 阶段结论
 
-第三阶段教材已经完成，但阶段目标仍由学习者在完成复述与跨平台实验后自行勾选。下一阶段入口是[Claude Code：高级 Context、Memory 与 Multi-Agent](../04-claude-code/README.md)。
+第三阶段教材已经完成，但阶段目标仍由学习者在完成复述与跨平台实验后自行勾选。下一阶段入口是[Claude Code：完整 Agent Harness](../04-claude-code/README.md)。

@@ -1,6 +1,6 @@
 # 第 2 课：输入接纳与 Agent Loop
 
-[返回本阶段目录](README.md) · [上一课](01-source-boundary-and-harness-map.md) · [官方工作原理](https://code.claude.com/docs/en/how-claude-code-works) · [课程实验](../../examples/04-claude-code/02-agent-loop/index.mjs)
+[返回本阶段目录](README.md) · [上一课](01-source-boundary-and-harness-map.md) · [官方工作原理](https://code.claude.com/docs/en/how-claude-code-works) · [课程实验](../examples/04-claude-code/02-agent-loop/index.mjs)
 
 ## 核心问题
 

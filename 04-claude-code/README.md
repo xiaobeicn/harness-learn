@@ -1,17 +1,17 @@
 # 第四阶段：Claude Code — 完整 Agent Harness
 
-[返回首页](../../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
+[返回首页](../README.md) · [学习路线](../00-roadmap.md) · [横向对照](../comparison.md)
 
 阶段状态：**教材已完成（12 / 12 课）；个人掌握清单待学习者验证**
 
-本阶段不把 Claude Code 缩减成 Context、Memory 与 Multi-Agent 三个功能点，而是沿全项目统一的六个维度研究完整 Harness：
+本阶段研究完整的 Claude Code Harness 架构，并沿六个维度展开：
 
 ```text
 Loop → Context → Tools → State → Safety → Extension
              ↘ Memory / Subagent / Agent Teams ↗
 ```
 
-Context、Memory 与 Multi-Agent 仍是重点，但必须放回模型循环、工具、副作用、持久化和安全边界中理解。
+课程覆盖模型循环、上下文、工具、副作用、持久化和安全边界，并深入分析 Memory、Subagent 与 Agent Teams。
 
 ## 阶段目标
 
@@ -116,7 +116,7 @@ Context、Memory 与 Multi-Agent 仍是重点，但必须放回模型循环、�
 
 - `源码/文档`：CLAUDE.md、Skill、Custom Agent、Hook、MCP、Plugin 对应不同生命周期。
 - `结论`：先选最窄的扩展，再考虑用 Plugin 组合和分发。
-- `结论`：Claude Code 的高级 Context、Memory 与 Multi-Agent 只有回到六维 Harness 闭环中才完整。
+- `结论`：Claude Code Harness 通过六维闭环组织 Context、Memory、Subagent 与 Agent Teams。
 
 ## 阶段结论
 

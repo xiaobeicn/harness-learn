@@ -1,6 +1,6 @@
 # 第 6 课：权限提升实验与阶段复盘
 
-[返回本阶段目录](README.md) · [上一课](05-filesystem-network-protected-paths.md) · [实验目录](../../examples/03-codex-cli/06-escalation-lab/README.md)
+[返回本阶段目录](README.md) · [上一课](05-filesystem-network-protected-paths.md) · [实验目录](../examples/03-codex-cli/06-escalation-lab/README.md)
 
 ## 核心问题
 
@@ -286,4 +286,4 @@ OS Sandbox 强制权限，是安全边界
 真实失败结果，是下一步决策的证据
 ```
 
-第三阶段教材至此完成。下一阶段进入 Claude Code，重点研究高级 Context、Memory 与 Multi-Agent，不把本阶段尚未完成的跨平台实验误记为已掌握。
+第三阶段教材至此完成。下一阶段进入 Claude Code，研究完整的 Harness 架构。本阶段尚未完成的跨平台实验继续保留为待验证项。

@@ -1,6 +1,6 @@
 # 第 4 课：Transcript 与 Model Context
 
-[上一课](03-build-minimal-agent-runtime.md) · [返回本阶段目录](README.md) · [运行代码](../../examples/01-pi-mono/04-context-boundary/index.mjs)
+[上一课](03-build-minimal-agent-runtime.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/04-context-boundary/index.mjs)
 
 ## 核心问题
 
@@ -28,7 +28,7 @@
 
 ## 运行实验
 
-代码位于 [`examples/01-pi-mono/04-context-boundary/index.mjs`](../../examples/01-pi-mono/04-context-boundary/index.mjs)。
+代码位于 [`examples/01-pi-mono/04-context-boundary/index.mjs`](../examples/01-pi-mono/04-context-boundary/index.mjs)。
 
 ```bash
 node examples/01-pi-mono/04-context-boundary/index.mjs

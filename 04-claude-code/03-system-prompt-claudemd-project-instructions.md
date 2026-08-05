@@ -1,6 +1,6 @@
 # 第 3 课：System Prompt、CLAUDE.md 与项目指令
 
-[返回本阶段目录](README.md) · [上一课](02-input-admission-and-agent-loop.md) · [官方 Memory 文档](https://code.claude.com/docs/en/memory) · [课程实验](../../examples/04-claude-code/03-instruction-precedence/index.mjs)
+[返回本阶段目录](README.md) · [上一课](02-input-admission-and-agent-loop.md) · [官方 Memory 文档](https://code.claude.com/docs/en/memory) · [课程实验](../examples/04-claude-code/03-instruction-precedence/index.mjs)
 
 ## 核心问题
 

@@ -1,6 +1,6 @@
 # 第 3 课：实现最小 Agent Runtime
 
-[上一课](02-prompt-tool-loop.md) · [返回本阶段目录](README.md) · [运行代码](../../examples/01-pi-mono/03-minimal-agent-runtime/index.mjs)
+[上一课](02-prompt-tool-loop.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/03-minimal-agent-runtime/index.mjs)
 
 ## 核心问题
 
@@ -46,7 +46,7 @@ final answer: Model saw: echoed: hello
 
 ## 五个最小部件
 
-完整代码在 [`index.mjs`](../../examples/01-pi-mono/03-minimal-agent-runtime/index.mjs)。
+完整代码在 [`index.mjs`](../examples/01-pi-mono/03-minimal-agent-runtime/index.mjs)。
 
 ### 1. Messages
 

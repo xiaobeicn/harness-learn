@@ -1,10 +1,10 @@
 # 第 1 课：来源边界与 Harness 总体架构
 
-[返回本阶段目录](README.md) · [官方工作原理](https://code.claude.com/docs/en/how-claude-code-works) · [课程实验](../../examples/04-claude-code/01-harness-map/index.mjs)
+[返回本阶段目录](README.md) · [官方工作原理](https://code.claude.com/docs/en/how-claude-code-works) · [课程实验](../examples/04-claude-code/01-harness-map/index.mjs)
 
 ## 核心问题
 
-怎样在没有官方完整源码的前提下，严谨地研究 Claude Code？为什么本阶段必须覆盖 Loop、Context、Tools、State、Safety、Extension 六个维度？
+怎样在没有官方完整源码的前提下，沿 Loop、Context、Tools、State、Safety、Extension 六个维度研究完整的 Claude Code Harness 架构？
 
 ## 先划清证据边界
 
@@ -24,7 +24,7 @@
 
 `文档`：[官方工作原理](https://code.claude.com/docs/en/how-claude-code-works)直接把 Claude Code 描述为模型外部的 agentic harness：它提供工具、上下文管理和执行环境。
 
-我们仍使用全项目统一的六个问题：
+课程使用六个问题建立 Claude Code Harness 地图：
 
 | 维度 | Claude Code 中的观察入口 | 本阶段对应课程 |
 | --- | --- | --- |
@@ -66,15 +66,15 @@ flowchart TD
 - Auto Memory 从历史中提炼少量跨会话知识，在未来会话重新进入 Context。
 - Agent / Team 把工作分配到别的 loop，最后以摘要、通知或 mailbox 消息回到主 loop。
 
-## 为什么不能只学高级 Context
+## Claude Code Harness 的跨层结构
 
-只研究 CLAUDE.md、Memory 和 Multi-Agent，会遗漏三个决定系统是否可靠的事实：
+Claude Code Harness 的可靠运行依赖六个维度持续协作：
 
 1. Context 最终仍要经过 Loop 才产生行为。
 2. Tools 和 Safety 决定模型输出能否变成真实副作用。
 3. State 决定中断、压缩、恢复和分叉以后，系统是否仍知道自己做过什么。
 
-`结论`：Claude Code 值得研究的地方不是功能数量，而是六层在一次长任务中持续协作。第四阶段会沿一次真实 continuation 逐层展开，而不是按 UI 功能罗列。
+`结论`：六维结构共同支撑一次长任务中的 Context admission、副作用执行、安全控制、状态恢复与多 Agent 协作。第四阶段沿一条完整 continuation 逐层展开。
 
 ## 实验
 
@@ -96,5 +96,5 @@ node examples/04-claude-code/01-harness-map/index.mjs
 
 - `文档`：Claude Code 官方把自身定义为 Claude 模型外部的 agentic harness。
 - `源码`：固定快照可以提供实现证据，但来源是非官方 source map 还原。
-- `结论`：本阶段覆盖 Loop、Context、Tools、State、Safety、Extension；Context、Memory、Multi-Agent 作为重点跨层深入。
+- `结论`：Loop、Context、Tools、State、Safety、Extension 构成课程主线；Memory、Subagent 与 Agent Teams 作为跨层机制深入分析。
 - `限制`：内部 feature gate、ant-only 分支和还原仓库附加代码不等于公开产品契约。

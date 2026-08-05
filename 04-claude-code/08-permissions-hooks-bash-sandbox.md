@@ -1,6 +1,6 @@
 # 第 8 课：Permission、Hooks、Bash 分类器与 Sandbox
 
-[返回本阶段目录](README.md) · [上一课](07-session-transcript-resume-fork-rewind.md) · [官方 Permission Modes](https://code.claude.com/docs/en/permission-modes) · [官方 Sandboxing](https://code.claude.com/docs/en/sandboxing) · [课程实验](../../examples/04-claude-code/08-safety-layers/index.mjs)
+[返回本阶段目录](README.md) · [上一课](07-session-transcript-resume-fork-rewind.md) · [官方 Permission Modes](https://code.claude.com/docs/en/permission-modes) · [官方 Sandboxing](https://code.claude.com/docs/en/sandboxing) · [课程实验](../examples/04-claude-code/08-safety-layers/index.mjs)
 
 ## 核心问题
 

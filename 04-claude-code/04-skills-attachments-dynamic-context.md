@@ -1,6 +1,6 @@
 # 第 4 课：Skills、Attachments 与动态 Context
 
-[返回本阶段目录](README.md) · [上一课](03-system-prompt-claudemd-project-instructions.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [官方 Skills 文档](https://code.claude.com/docs/en/skills) · [课程实验](../../examples/04-claude-code/04-context-admission/index.mjs)
+[返回本阶段目录](README.md) · [上一课](03-system-prompt-claudemd-project-instructions.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [官方 Skills 文档](https://code.claude.com/docs/en/skills) · [课程实验](../examples/04-claude-code/04-context-admission/index.mjs)
 
 ## 核心问题
 

@@ -1,6 +1,6 @@
 # 第 5 课：Token 压力、Microcompact 与 Compaction
 
-[返回本阶段目录](README.md) · [上一课](04-skills-attachments-dynamic-context.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [课程实验](../../examples/04-claude-code/05-compaction/index.mjs)
+[返回本阶段目录](README.md) · [上一课](04-skills-attachments-dynamic-context.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [课程实验](../examples/04-claude-code/05-compaction/index.mjs)
 
 ## 核心问题
 

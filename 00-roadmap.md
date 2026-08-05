@@ -1,6 +1,6 @@
 # Agent Harness 学习路线
 
-[返回首页](../README.md)
+[返回首页](README.md)
 
 ## 学习目标
 
@@ -14,8 +14,7 @@
 第三阶段：Codex CLI
     ↓  理解生产级 Sandbox 与安全控制
 第四阶段：Claude Code
-       以高级 Context、Memory、Multi-Agent 为重点
-       完整研究 Loop、Context、Tools、State、Safety、Extension
+    ↓  研究完整的 Claude Code Harness 架构
 ```
 
 这四个阶段是为了学习而安排的观察顺序，并不表示后一个项目在实现上严格包含前一个项目的全部设计。

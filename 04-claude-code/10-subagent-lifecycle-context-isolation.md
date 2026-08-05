@@ -1,6 +1,6 @@
 # 第 10 课：Subagent 生命周期、Context 隔离与后台任务
 
-[返回本阶段目录](README.md) · [上一课](09-auto-memory-recall-governance.md) · [官方 Subagents 文档](https://code.claude.com/docs/en/sub-agents) · [课程实验](../../examples/04-claude-code/10-subagent-context/index.mjs)
+[返回本阶段目录](README.md) · [上一课](09-auto-memory-recall-governance.md) · [官方 Subagents 文档](https://code.claude.com/docs/en/sub-agents) · [课程实验](../examples/04-claude-code/10-subagent-context/index.mjs)
 
 ## 核心问题
 

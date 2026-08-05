@@ -1,6 +1,6 @@
 # Codex CLI 权限提升实验
 
-[返回示例目录](../../README.md) · [返回课程](../../../docs/03-codex-cli/06-escalation-experiment-phase-review.md)
+[返回示例目录](../../README.md) · [返回课程](../../../03-codex-cli/06-escalation-experiment-phase-review.md)
 
 这个目录提供一个最小安全探针，用于观察 workspace 内写入、workspace 外写入、deny-read 和默认网络行为。
 

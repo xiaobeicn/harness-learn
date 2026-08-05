@@ -1,6 +1,6 @@
 # 第 12 课：Plugin、MCP、Hooks、Skills 扩展与端到端复盘
 
-[返回本阶段目录](README.md) · [上一课](11-agent-teams-tasks-mailbox.md) · [官方 Features 总览](https://code.claude.com/docs/en/features-overview) · [课程实验](../../examples/04-claude-code/12-extension-routing/index.mjs)
+[返回本阶段目录](README.md) · [上一课](11-agent-teams-tasks-mailbox.md) · [官方 Features 总览](https://code.claude.com/docs/en/features-overview) · [课程实验](../examples/04-claude-code/12-extension-routing/index.mjs)
 
 ## 核心问题
 
@@ -157,5 +157,5 @@ input
 - `源码/文档`：Skills、Agents、Hooks、MCP 是不同生命周期的扩展；Plugin 是组合与分发边界。
 - `源码`：MCP tools 最终进入统一 Tool executor，Plugin marketplace policy 可 fail-closed。
 - `结论`：先选最窄的生命周期，再考虑组合成 Plugin。
-- `结论`：Claude Code 的高级 Context、Memory 与 Multi-Agent 只有放回六维 Harness 闭环中才完整。
+- `结论`：Claude Code Harness 通过六维闭环组织 Context、Memory、Subagent 与 Agent Teams。
 - `限制`：扩展可执行代码、访问外部系统或注入 Prompt；安装来源、凭据和权限必须按不受信输入治理。

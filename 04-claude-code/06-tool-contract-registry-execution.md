@@ -1,6 +1,6 @@
 # 第 6 课：Tool Contract、注册、并发与结果回灌
 
-[返回本阶段目录](README.md) · [上一课](05-token-pressure-microcompact-compaction.md) · [官方 Tools 说明](https://code.claude.com/docs/en/how-claude-code-works#tools) · [课程实验](../../examples/04-claude-code/06-tool-executor/index.mjs)
+[返回本阶段目录](README.md) · [上一课](05-token-pressure-microcompact-compaction.md) · [官方 Tools 说明](https://code.claude.com/docs/en/how-claude-code-works#tools) · [课程实验](../examples/04-claude-code/06-tool-executor/index.mjs)
 
 ## 核心问题
 

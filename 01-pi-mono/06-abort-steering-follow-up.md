@@ -1,6 +1,6 @@
 # 第 6 课：Abort、Steering 与 Follow-up
 
-[上一课](05-event-driven-agent-state.md) · [返回本阶段目录](README.md) · [运行代码](../../examples/01-pi-mono/06-run-control/index.mjs)
+[上一课](05-event-driven-agent-state.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/06-run-control/index.mjs)
 
 ## 核心问题
 
@@ -43,7 +43,7 @@ Abort 不属于任一消息队列。它通过独立的 `AbortController` 传播�
 
 ## 运行实验
 
-代码位于 [`examples/01-pi-mono/06-run-control/index.mjs`](../../examples/01-pi-mono/06-run-control/index.mjs)。
+代码位于 [`examples/01-pi-mono/06-run-control/index.mjs`](../examples/01-pi-mono/06-run-control/index.mjs)。
 
 ```bash
 node examples/01-pi-mono/06-run-control/index.mjs
