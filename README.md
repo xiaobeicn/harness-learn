@@ -15,11 +15,12 @@ Pi Mono
 
 ## 当前进度
 
-正在学习：**第一阶段 · Pi Mono**
+学习进度：**第一阶段 · Pi Mono 课程已完成**
 
-- [第 1 课：Agent Runtime 心智模型](docs/01-pi-mono/01-agent-runtime-mental-model.md)
-- [第 2 课：从 prompt() 追踪工具循环](docs/01-pi-mono/02-prompt-tool-loop.md)
-- 下一课：亲手实现一个不连接真实模型的最小 Agent Runtime
+- 阶段复盘：[第 7 课：第一阶段复盘](docs/01-pi-mono/07-phase-review.md)
+- 下一阶段：[OpenCode · 完整 Coding Agent](docs/02-opencode/README.md)
+- 说明：个人掌握清单保留未勾选，不由文档完成状态代替
+- 全部课程：[Pi Mono 阶段目录](docs/01-pi-mono/README.md)
 
 ## 文档目录
 
@@ -30,6 +31,7 @@ Pi Mono
 | 第二阶段：OpenCode | [docs/02-opencode/README.md](docs/02-opencode/README.md) |
 | 第三阶段：Codex CLI | [docs/03-codex-cli/README.md](docs/03-codex-cli/README.md) |
 | 第四阶段：Claude Code | [docs/04-claude-code/README.md](docs/04-claude-code/README.md) |
+| 课程示例 | [examples/README.md](examples/README.md) |
 | 四个 Harness 横向对照 | [docs/comparison.md](docs/comparison.md) |
 | 单次学习记录模板 | [docs/learning-log-template.md](docs/learning-log-template.md) |
 
