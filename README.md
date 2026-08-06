@@ -25,6 +25,7 @@ Pi Mono
 | 第四阶段：Claude Code 完整 Harness | [04-claude-code/README.md](04-claude-code/README.md) |
 | 课程示例 | [examples/README.md](examples/README.md) |
 | 四个 Harness 横向对照 | [comparison.md](comparison.md) |
+| 四个 Harness 的优秀设计与自研基线 | [harness-design-summary.md](harness-design-summary.md) |
 | 单次学习记录模板 | [learning-log-template.md](learning-log-template.md) |
 
 ## 阅读约定
