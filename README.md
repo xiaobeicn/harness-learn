@@ -26,6 +26,7 @@ Pi Mono
 | 课程示例 | [examples/README.md](examples/README.md) |
 | 四个 Harness 横向对照 | [comparison.md](comparison.md) |
 | 四个 Harness 的优秀设计与自研基线 | [harness-design-summary.md](harness-design-summary.md) |
+| Agent Harness 术语对照表 | [glossary.md](glossary.md) |
 | 单次学习记录模板 | [learning-log-template.md](learning-log-template.md) |
 
 ## 阅读约定

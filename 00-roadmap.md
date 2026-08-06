@@ -28,6 +28,8 @@
 | Coding Agent | 面向代码任务的 Agent 产品，通常加入文件、Shell、搜索、编辑和项目感知能力。 |
 | Agent Harness | 包住模型的整套运行环境；除 Runtime 外，还可能包含上下文管理、权限、Sandbox、持久化、UI、Memory 和 Multi-Agent 编排。 |
 
+更多中英文术语、易混淆概念和四个项目的源码名见[术语对照表](glossary.md)。
+
 ## 统一分析框架
 
 所有项目都沿下面这条主线阅读：
