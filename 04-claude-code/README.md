@@ -27,7 +27,7 @@ Loop → Context → Tools → State → Safety → Extension
 - [ ] 比较 fresh / fork、foreground / background、worktree isolation。
 - [ ] 解释 Agent Team 的 Tasks、Mailbox、ownership、dependency 和 permission sync。
 - [ ] 在 CLAUDE.md、Skill、Custom Agent、Hook、MCP、Plugin 之间选择最窄扩展。
-- [ ] 用六维框架完成四个 Harness 的最终横向比较。
+- [ ] 用六维框架完成前四个 Harness 的阶段性横向比较。
 
 ## 课程
 
@@ -120,4 +120,4 @@ Loop → Context → Tools → State → Safety → Extension
 
 ## 阶段结论
 
-第四阶段教材已经完成，但阶段目标仍由学习者在独立复述、真实 CLI 实验和扩展练习后自行勾选。四阶段的最终对照见[Agent Harness 横向对照](../comparison.md)。
+第四阶段教材已经完成，但阶段目标仍由学习者在独立复述、真实 CLI 实验和扩展练习后自行勾选。前四阶段的阶段性对照见[Agent Harness 横向对照](../comparison.md)，最终对照在第五阶段完成。

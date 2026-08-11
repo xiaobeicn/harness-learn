@@ -1,16 +1,17 @@
-# 四个 Agent Harness 的优秀设计与自研基线
+# 五个 Agent Harness 的优秀设计与自研基线
 
 [返回首页](README.md) · [学习路线](00-roadmap.md) · [横向对照](comparison.md)
 
 ## 文档目标
 
-本文基于现有四个阶段的学习记录，提炼适合自研 Harness Agent 的设计原则。目标不是完整复刻某一个项目，而是组合各自最成熟的部分：
+本文基于现有五个阶段的学习记录，提炼适合自研 Harness Agent 的设计原则。目标不是完整复刻某一个项目，而是组合各自最成熟的部分：
 
 ```text
 Pi Mono     → 简洁、可测试的 Runtime 内核
 OpenCode    → 产品化、持久化与状态同步
 Codex CLI   → 权限收敛、审批与 OS Sandbox
 Claude Code → 长 Context、Memory、扩展与 Multi-Agent
+Prime Agent  → 持久 Python、RLM、Daemon continuity 与 Continual Harness
 ```
 
 最终希望得到一个同时满足以下目标的 Harness：
@@ -20,7 +21,7 @@ Claude Code → 长 Context、Memory、扩展与 Multi-Agent
 - **高性能**：控制 Context、工具输出、事件和渲染成本，在安全边界内并行执行。
 - **可演进**：Runtime、Provider、Tool、安全、持久化和扩展机制可以分别替换或增强。
 
-## 一、四个项目最值得学习的设计
+## 一、五个项目最值得学习的设计
 
 | 项目 | 最优秀的设计 | 对自研 Harness 的价值 |
 | --- | --- | --- |
@@ -28,6 +29,7 @@ Claude Code → 长 Context、Memory、扩展与 Multi-Agent
 | OpenCode | Durable Session、Client / Server、可靠事实与 UI projection 分层 | 支撑多入口、后台执行、恢复和复杂产品状态。 |
 | Codex CLI | Approval 与 OS Sandbox 正交、canonical Permission Profile | 建立真正可信的最小权限执行底座。 |
 | Claude Code | Context admission、Compaction、Session DAG、Memory、Subagent 和扩展生命周期 | 支撑长任务、长期知识和复杂 Agent 编排。 |
+| Prime Agent | Persistent IPython、typed Host Bridge、RLM、Daemon 与 Continual Harness | 支撑程序化推理、递归委派、断线恢复和可审计的持续改进。 |
 
 ### Pi Mono：最干净的 Runtime 内核
 
@@ -196,6 +198,52 @@ Compaction 不只是聊天总结。它需要保留目标、决策、真实修改
 
 证据与详细流程见 [Claude Code 阶段目录](04-claude-code/README.md)和[端到端复盘](04-claude-code/12-extension-system-end-to-end-review.md)。
 
+### Prime Agent：最鲜明的程序化控制面与持续运行设计
+
+Prime Agent 最值得学习的是在“高表达力 Kernel”与“权威 Host”之间建立明确协议，而不是简单把所有能力塞进 Python。
+
+#### Persistent Python 与 typed Host Bridge
+
+```text
+模型只看到 ipython
+  → 持久 namespace 组合文件、Shell、Skill 与数据处理
+  → host.request 只请求显式注册的权威操作
+  → AgentSession 执行 Provider、Session、Goal、child 与 scheduling mutation
+```
+
+- Python namespace 跨 tool calls 与 Compaction 保持，适合把大 Context 变成可查询变量。
+- `%%bash` 使用临时 subshell，不把 Shell cwd / variables 假装成持久状态。
+- Python shim 不持有 Provider credential 或 Session transcript。
+- active cell 的 Host reply 经 Jupyter control channel 返回，避免 shell channel 自等待死锁。
+- Host handler 是 typed allowlist；未知 request 显式失败。
+
+这种设计可作为自研 Harness 的可选 programmatic control plane。它不应取代 ToolResult contract、权限检查和 durable settlement。
+
+#### RLM 与长任务 continuity
+
+- `rlm()` 返回 child admission handle，不把接纳误写成完成。
+- 每个 child 使用独立 AgentSession、Context、transcript 与可选 Kernel。
+- 每棵 root Session tree 由一个 Worker 持有，Supervisor 只负责路由、attachment、health 和恢复。
+- Daemon event cursor 使用 `{generation, sequence}`；replay 不足时以一致 snapshot 重建 client baseline。
+- command journal 可以复用已知完成结果，但 received-without-result 必须保持 uncertain，不能盲目重放副作用。
+- Goal 保存 durable objective；Autonomous 决定是否立即 continuation；Heartbeat / Schedule 决定何时重新进入 Session。
+
+这里最重要的工程取舍是承认 at-most-once 与 unknown outcome：宁可要求 reconciliation，也不制造虚假的 exactly-once。
+
+#### Continual Harness 的收敛式改进
+
+Continual Harness 只保存 prompt、memory、skill、subagent 四类补充 entry。Local 是默认 scope，Global 需要显式扩大影响范围。Refinement 使用慢的 plan 与短的 atomic apply：
+
+1. 从 trajectory 提取少量有证据 edits。
+2. 校验 kind、ID、scope、callable contract 与不可变 base prompt。
+3. 在 quiescent turn boundary 重读目标 state。
+4. 做 baseline conflict check、原子保存并写 history。
+5. 用 before / after snapshot 支持补充状态 rollback。
+
+这使“持续改进”成为可审计状态变更，而不是让模型任意重写自身核心指令。
+
+证据与详细流程见 [Prime Agent 阶段目录](05-prime-agent/README.md)和[端到端复盘](05-prime-agent/10-end-to-end-review.md)。
+
 ## 二、建议的自研总体架构
 
 ```mermaid
@@ -214,6 +262,11 @@ flowchart TD
     EV --> PR["Client Projections"]
     EV --> CP["Compaction / Memory"]
     LP --> MA["Subagents / Tasks / Mailbox"]
+    LP --> KC["Optional Persistent Kernel"]
+    KC --> HB["Typed Host Bridge"]
+    HB --> TE
+    EV --> LR["Goal / Schedule / Recovery"]
+    LR --> CO
 ```
 
 ### 建议的模块边界
@@ -229,6 +282,8 @@ flowchart TD
 | Sandbox Runtime | 文件、网络、进程与子进程的实际边界。 | 判断任务语义是否合理。 |
 | Event / Projection | durable replay、live stream、UI reducer。 | 把 Client Store 当成 Server 真相。 |
 | Memory / Multi-Agent | 长期知识、独立 loop、Tasks、Mailbox。 | 绕过父级权限和状态协议。 |
+| Programmatic Runtime / Host Bridge | 持久计算 namespace、typed authority calls、Kernel lifecycle。 | 不受约束地持有 Provider、Session 或宿主权限。 |
+| Long-task Controller | Goal、continuation policy、schedule、generation recovery。 | 把 uncertain side effect 宣称为完成或自动重放。 |
 
 ## 三、必须坚持的核心不变量
 
@@ -274,6 +329,15 @@ flowchart TD
 26. 并行任务必须有明确 owner，并尽量避免共享热点文件。
 27. Task claim、dependency、permission、plan 和 shutdown 使用结构化协议，不依赖自然语言猜测。
 28. Worktree 只提供文件隔离，不等于 OS Sandbox，也不自动合并变更。
+29. Child admission handle、运行状态、消息回传和最终 completion 必须是不同事实。
+30. 子 Agent 的 usage、transcript、Kernel 与 execution owner 必须可独立归属和恢复。
+
+### 长任务与持续改进
+
+31. Event cursor 必须携带 generation；generation 改变后以 snapshot 重建 baseline，不能比较裸 sequence。
+32. 已完成 mutation 可以按稳定 command ID 去重，结果不确定的副作用必须 reconciliation，不能自动重放。
+33. Objective、immediate continuation policy 与 timed schedule 必须是三种状态。
+34. 自动改进只能修改有 scope、来源、历史和 rollback 的补充状态，核心安全与 base prompt 不得由轨迹静默改写。
 
 ## 四、好用、安全和高性能的具体落点
 
@@ -338,7 +402,14 @@ flowchart TD
 - 有 owner、dependency、Mailbox 与 permission sync 的 Agent Team。
 - 最后再加入 Hooks、MCP 和 Plugin 分发。
 
-不要一开始就实现 Agent Teams。一个不能可靠保存状态、限制副作用和恢复 Context 的单 Agent，扩展成多个只会放大错误、成本和竞态。
+### 第 6 阶段：长任务 continuity 与持续 Harness
+
+- 可选 persistent Kernel 与 typed Host Bridge，明确 authority ownership。
+- Goal、bounded Autonomous、Heartbeat / Schedule 与 arrival-race handling。
+- Worker generation cursor、snapshot recovery、command journal 与 uncertain mutation。
+- 最后再加入有 scope、conflict check、history 和 rollback 的 refinement。
+
+不要一开始就实现 Agent Teams 或自动 Refinement。一个不能可靠保存状态、限制副作用和恢复 Context 的单 Agent，扩展成多个或允许其持久改变未来行为，只会放大错误、成本和竞态。
 
 ## 六、不能直接照搬的边界
 
@@ -346,6 +417,7 @@ flowchart TD
 - OpenCode 的 Permission 不是 OS Sandbox；Tool call 与外部副作用之间没有通用 exactly-once，固定版本全局事件流也不能可靠补齐断线缺口。
 - Codex CLI 阶段聚焦 Sandbox 主线，没有重新验证完整 Context、Session 和 Multi-Agent；三平台实验步骤已提供，但尚未在本仓库记录真实执行结果。
 - Claude Code 的公开功能以官方文档为准；内部实现分析来自非官方 source-map 还原，只适合借鉴设计，不能当作官方稳定契约。
+- Prime Agent 的 Worker、Kernel、Host allowlist 与 Extension Hook 都不是 OS Sandbox；固定版本上游 runtime 未安装或真实运行，Daemon 文档标题的 v4 也滞后于源码 v7 / schema 15。
 - Conversation rewind、文件恢复和外部世界状态回滚是三件事，任何一个项目都不能自动提供通用事务回滚。
 
 ## 总结
@@ -357,6 +429,7 @@ Pi Mono 的小内核
 + OpenCode 的 durable Session 与 projection
 + Codex CLI 的 canonical permissions 与 OS Sandbox
 + Claude Code 的 Context lifecycle、Memory 和 Agent protocol
++ Prime Agent 的 persistent Kernel、typed Host、Daemon continuity 与 auditable refinement
 ```
 
-真正优秀的 Harness 不是工具最多，而是每一层都有清晰、可验证的责任：模型提出意图，Runtime 控制 continuation，Tool contract 描述副作用，Approval 处理授权，Sandbox 强制边界，Event Log 保存事实，Context Manager 选择下一轮真正需要的信息。
+真正优秀的 Harness 不是工具最多，而是每一层都有清晰、可验证的责任：模型提出意图，Runtime 控制 continuation，Programmatic Kernel 组合计算，typed Host 保留权威操作，Tool contract 描述副作用，Approval 处理授权，Sandbox 强制边界，Event Log 保存事实，Context Manager 选择下一轮真正需要的信息。

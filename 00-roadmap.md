@@ -4,7 +4,7 @@
 
 ## 学习目标
 
-目标不是只会使用四个工具，而是逐层理解：一个模型如何被包装成可执行、可控制、可扩展的 Coding Agent。
+目标不是只会使用五个工具，而是逐层理解：一个模型如何被包装成可执行、可控制、可扩展，并能持续运行和恢复的 Coding Agent。
 
 ```text
 第一阶段：Pi Mono
@@ -15,9 +15,11 @@
     ↓  理解生产级 Sandbox 与安全控制
 第四阶段：Claude Code
     ↓  研究完整的 Claude Code Harness 架构
+第五阶段：Prime Agent
+    ↓  研究 RLM、持久 Kernel、Daemon continuity 与 Continual Harness
 ```
 
-这四个阶段是为了学习而安排的观察顺序，并不表示后一个项目在实现上严格包含前一个项目的全部设计。
+这五个阶段是为了学习而安排的观察顺序，并不表示后一个项目在实现上严格包含前一个项目的全部设计。
 
 ## 术语
 
@@ -28,7 +30,7 @@
 | Coding Agent | 面向代码任务的 Agent 产品，通常加入文件、Shell、搜索、编辑和项目感知能力。 |
 | Agent Harness | 包住模型的整套运行环境；除 Runtime 外，还可能包含上下文管理、权限、Sandbox、持久化、UI、Memory 和 Multi-Agent 编排。 |
 
-更多中英文术语、易混淆概念和四个项目的源码名见[术语对照表](glossary.md)。
+更多中英文术语、易混淆概念和五个项目的源码名见[术语对照表](glossary.md)。
 
 ## 统一分析框架
 
@@ -60,6 +62,7 @@
 2. [OpenCode：完整 Coding Agent](02-opencode/README.md)
 3. [Codex CLI：生产级 Sandbox](03-codex-cli/README.md)
 4. [Claude Code：完整 Agent Harness](04-claude-code/README.md)
+5. [Prime Agent：RLM 与持续进化 Harness](05-prime-agent/README.md)
 
 ## 每次学习的固定节奏
 
@@ -74,10 +77,10 @@
 
 ## 最终产出
 
-完成四个阶段后，应得到：
+完成五个阶段后，应得到：
 
 - 一套不依赖具体产品的 Agent Harness 心智模型。
-- 四张关键调用流程图。
+- 五张关键调用流程图。
 - 一张有源码、文档或实验依据的[横向对照表](comparison.md)。
 - 一个自己实现的最小 Agent Runtime。
-- 一份关于 Sandbox、Context、Memory 和 Multi-Agent 取舍的总结。
+- 一份关于 Sandbox、Context、Memory、Multi-Agent、长期运行与持续改进取舍的总结。

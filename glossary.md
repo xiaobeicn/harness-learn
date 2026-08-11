@@ -4,7 +4,7 @@
 
 ## 使用说明
 
-本文统一四个项目学习记录中反复出现的英文术语。表中的“推荐中文”用于理解和中文写作，不要求改写源码标识符、协议字段、产品名称或命令行参数。
+本文统一五个项目学习记录中反复出现的英文术语。表中的“推荐中文”用于理解和中文写作，不要求改写源码标识符、协议字段、产品名称或命令行参数。
 
 建议遵守以下约定：
 
@@ -28,8 +28,11 @@
 | Snapshot / Event / State | Snapshot 是某时刻完整视图；Event 是一次变化事实；State 是事件或数据归约后的当前状态。 |
 | Microcompact / Compaction | Microcompact 清理旧的低价值工具结果；Compaction 用摘要和边界重建后续活动 Context。 |
 | Compaction summary / Memory | Compaction summary 服务当前 Session 的继续执行；Memory 保存少量跨会话知识。 |
+| RLM / Continual Harness | RLM 是持久 IPython、Host Bridge 与递归 child 的执行模型；Continual Harness 是进入未来 Context 的持久补充状态。 |
+| Admission handle / Completion result | Handle 只证明工作被接纳并提供稳定身份；最终结果必须由完成状态、消息或持久记录证明。 |
 | Resume / Fork / Rewind / Rollback | Resume 继续原 Session；Fork 创建新分支；Rewind 改变选中的会话或文件节点；Rollback 才表示撤销真实世界副作用。 |
 | Worktree isolation / OS Sandbox | Worktree 只隔离 Git 工作目录；OS Sandbox 约束文件、网络、进程及子进程能力。 |
+| Worker / Kernel process / OS Sandbox | Worker 与 Kernel 可隔离生命周期和故障；只有 OS 或外部 enforcement 才限制真实系统权限。 |
 | Network capability / Managed proxy | Capability 决定进程是否有网络能力；Proxy 决定流量是否经过域名和方法策略。 |
 | Foreground / Background / Fresh / Fork | 前后台描述调度；Fresh/Fork 描述 Subagent 初始 Context，二者是不同维度。 |
 
@@ -42,6 +45,9 @@
 | Agent Runtime | 智能体运行时 | 驱动“模型 → 工具 → 结果 → 模型”并维护运行控制的内核。 |
 | Coding Agent | 编码智能体 | 加入文件、搜索、编辑、Shell、项目感知和验证能力的 Agent 产品。 |
 | Agent Harness | 智能体运行框架 | 包住模型的完整系统，包括 Runtime、Context、Tools、State、Safety、UI 和 Extension。 |
+| RLM | 递归语言模型 / RLM 编程模型 | Prime Agent 中以持久 IPython 操作 Context、调用能力并可递归创建 child Agent 的执行方式。 |
+| Persistent Kernel | 持久计算内核 | 跨 Tool Calls 与 Compaction 保留 Python namespace 的长寿命 IPython 进程。 |
+| Host Bridge | 宿主桥接 | Kernel 通过 typed request 请求 Provider、Session、Goal 或 child 等 Host 权威操作的协议边界。 |
 | Agent Loop / Loop | 智能体循环 / 执行循环 | 重复构造请求、调用模型、执行工具、回灌结果并判断是否继续的控制结构。 |
 | Query | 一次查询执行 | 从一条输入开始，由 Harness 驱动到停止、失败或等待用户的完整执行链。 |
 | Turn | 轮次 | 一次模型请求及其输出；各项目边界略有差异，通常在下一次模型调用前结束。 |
@@ -81,6 +87,12 @@
 | Idempotency key | 幂等键 | 用于识别同一次逻辑请求的稳定 ID，例如 Prompt message ID。 |
 | Reconcile | 对账 / 重合确认 | 重试时发现已有等价事实并返回，而不是重复创建。 |
 | Exactly-once | 恰好一次 | 副作用只发生一次的强保证；仅有 durable call/result 通常不能自动提供。 |
+| Admission handle | 接纳句柄 | 工作被接受后立即返回的稳定 ID 与初始状态，不包含最终答案或 completion 保证。 |
+| Goal | 持久目标 | 跨 turn 保存的显式 objective 与 usage 状态；普通 turn 结束不代表目标完成。 |
+| Autonomous mode | 自主续行模式 | Host 根据 gate 与 turn、token、time 等限制决定是否继续注入新一轮的有界策略。 |
+| Schedule | 定时任务 | 在指定时间向目标 Session 投递 prompt 的 one-shot、interval 或 cron 状态。 |
+| `/heartbeat` | 用户周期提示 | Prime Agent 中由用户拥有的当前 Session recurring instruction，与连接存活检测不是同一机制。 |
+| `rlm_heartbeat` | Agent 心跳任务 | 由 Agent 在当前 Session 内创建和管理的 recurring instruction，不拥有用户 `/heartbeat`。 |
 
 ## 四、Context 与 Token 管理
 
@@ -117,6 +129,9 @@
 | Context overflow | 上下文溢出 | 实际请求超过模型 Context window。 |
 | Overflow recovery | 溢出恢复 | 在尚未产生输出时，通过一次受控 Compaction 重建请求。 |
 | Recent context | 近期原文 | Compaction 后仍保留的最近对话和工具事实，作为摘要的原文锚点。 |
+| Kernel namespace | 内核命名空间 | Persistent Kernel 中保存的 variables、imports 与 helper functions；与 Transcript 或 Compaction summary 不同。 |
+| Continual Harness | 持续 Harness 状态 | Prime Agent 保存的 prompt、memory、skill、subagent 补充条目，按 local / global scope 进入未来 Context。 |
+| Refinement | Harness 精炼 | 从 trajectory 规划并应用小型 Harness state edits 的 plan / apply 流程，带校验、冲突检查、历史和回滚。 |
 
 ## 五、Tools 与副作用
 
@@ -165,6 +180,7 @@
 | Event stream | 事件流 | 按发生顺序持续传输事件的通道；是否可靠取决于存储和 cursor。 |
 | Sequence / `seq` | 序号 | 一个 Session aggregate 内单调推进的事件位置。 |
 | Cursor | 游标 | 客户端最后成功归约的 sequence，用于补读缺口。 |
+| Generation cursor | 代际游标 | `{generation, sequence}` 事件位置；generation 变化后旧 sequence 不再可比较，应以 snapshot 对齐。 |
 | Replay | 重放 | 从事件日志重新读取事实并重建状态。 |
 | Projection | 投影 | 从完整事实构造面向模型、客户端或查询的特定视图。 |
 | Client projection | 客户端投影 | UI 为渲染维护的当前状态，不是 Server 的唯一真相。 |
@@ -173,7 +189,7 @@
 | Live stream | 实时流 | 为在线体验发送最新变化，通常不保证断线回放。 |
 | Durable stream | 可重放持久流 | 先按 cursor 补历史，再持续 tail 新事件的流。 |
 | PubSub | 发布订阅 | 进程内或分布式的事件通知机制；不应默认当成 durable log。 |
-| Heartbeat | 心跳 | 维持连接和检测存活的周期消息，不代表业务状态变化。 |
+| Heartbeat | 连接心跳 | 维持连接和检测存活的周期消息，不代表业务状态变化；Prime Agent 的 `/heartbeat` 产品命令另指用户周期提示。 |
 | Backpressure | 背压 | 消费者跟不上生产者时限制缓存、批量处理或显式失败的机制。 |
 | Bounded subscriber | 有界订阅者 | 使用固定容量队列，防止慢客户端无限占用内存。 |
 | Batch / batching | 批处理 | 在短时间窗口内归约多个 delta，减少 UI 重复渲染。 |
@@ -198,6 +214,9 @@
 | Sidechain transcript | 侧链会话记录 | Subagent 独立于主 Agent 保存的 transcript。 |
 | Crash recovery | 崩溃恢复 | 进程退出后根据 durable facts 识别并恢复或结算未完成工作。 |
 | Reconciliation | 状态对账 | 对比 durable facts 与真实宿主状态，判断副作用是否已发生。 |
+| Session lease | 会话租约 | 按 canonical transcript path 保护持久 Session 单写者 ownership 的进程协调锁。 |
+| Command journal | 命令日志 | 在 dispatch 前保存 receipt，并记录 result / acknowledgement 以支持去重和恢复判断的追加日志。 |
+| Uncertain mutation | 结果不确定的变更 | 副作用可能已发生但 durable result 缺失；必须显式对账，不能假定失败或自动重放。 |
 
 ## 八、安全、权限与 Sandbox
 
@@ -275,6 +294,8 @@
 | Project instruction | 项目指令 | `AGENTS.md`、`CLAUDE.md` 或 rules 中与项目相关的稳定约束。 |
 | Rule | 规则 | 可带路径条件或匹配条件的项目、权限或扩展约束。 |
 | Skill | 技能 | 按需加载的知识、步骤、工具范围和工作流包。 |
+| Python-backed Skill | Python 技能包 | 同时含 `SKILL.md` 与真实 Python package、可从 Persistent Kernel import / call 的 Skill。 |
+| Harness skill entry | Harness 技能条目 | Continual Harness 中对既有 Python callable 的 reference 与 argument contract，不是可执行 package。 |
 | Hook | 钩子 | 在确定事件边界运行的可编程扩展，例如 PreToolUse、Stop、Compact。 |
 | MCP | 模型上下文协议 | 连接外部 tools、resources 和 prompts 的标准协议。 |
 | Plugin | 插件 | 将 Skills、Agents、Hooks、MCP 等能力组合、命名空间化并分发的边界。 |
@@ -331,7 +352,7 @@
 | Restricted token | 受限访问令牌 | Windows 通过收紧身份和能力启动子进程的机制。 |
 | Capability SID | 能力安全标识 | Windows 用于配合 token 与 ACL 表达受限能力的 SID。 |
 
-## 十二、四个项目的常见源码名速查
+## 十二、五个项目的常见源码名速查
 
 ### Pi Mono
 
@@ -393,6 +414,24 @@
 | Skill | 按需加载的工作流与知识包。 |
 | Hook | 在确定事件边界运行的策略或自动化。 |
 | Plugin | 组合并分发 Skills、Agents、Hooks 和 MCP 等扩展的边界。 |
+
+### Prime Agent
+
+| 源码名 | 中文理解 |
+| --- | --- |
+| `AgentSession` | Provider、Context、工具、队列、Compaction、Goal 与 child lifecycle 的权威 Session owner。 |
+| `KernelManager` | 启动并管理 IPython、Jupyter sockets、cell serialization、Host request 与 namespace snapshot。 |
+| `host.request` | Python shim 经 Jupyter comm 发给 TypeScript Host 的 typed request target。 |
+| `rlm()` / `rlm.run` | Kernel 侧 child admission API 与对应 Host request；返回 handle，不返回 child 最终答案。 |
+| `SessionManager` | 读写 append-only JSONL tree、branch 与 Session metadata 的持久化组件。 |
+| Continual Harness state | local / global 的 prompt、memory、skill、subagent 补充条目集合。 |
+| `planRefinement()` / `_applyRefine()` | 将模型规划与 turn-boundary 冲突检查、原子 apply 分开的 Refinement 两阶段。 |
+| `DaemonAgentConnection` | Client 侧 attachment、event replay、snapshot 与 reconnect 边界。 |
+| `DaemonEventCursor` | 由 generation + sequence 构成的事件位置。 |
+| `CommandRecoveryJournal` | 按 client ID + command ID 去重已完成 mutation，并保留 uncertain 状态。 |
+| `GoalState` | durable objective、status、usage、budget 与 continuation 计数。 |
+| `AutonomousRuntimeState` | Gate、continuation / turn / token / time limit 与 workspace fingerprint 状态。 |
+| `AgentCronJob` | user heartbeat、RLM heartbeat 或 general schedule 的持久 job。 |
 
 ## 维护规则
 
