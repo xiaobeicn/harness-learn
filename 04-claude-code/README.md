@@ -120,4 +120,4 @@ Loop → Context → Tools → State → Safety → Extension
 
 ## 阶段结论
 
-第四阶段教材已经完成，但阶段目标仍由学习者在独立复述、真实 CLI 实验和扩展练习后自行勾选。前四阶段的阶段性对照见[Agent Harness 横向对照](../comparison.md)，最终对照在第五阶段完成。
+第四阶段教材已经完成，但阶段目标仍由学习者在独立复述、真实 CLI 实验和扩展练习后自行勾选。前四阶段的阶段性对照见[Agent Harness 横向对照](../comparison.md)，后续阶段继续补充 RLM 与可组合 Harness 观察。

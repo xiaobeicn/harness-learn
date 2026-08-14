@@ -4,7 +4,7 @@
 
 ## 使用说明
 
-本文统一五个项目学习记录中反复出现的英文术语。表中的“推荐中文”用于理解和中文写作，不要求改写源码标识符、协议字段、产品名称或命令行参数。
+本文统一六个项目学习记录中反复出现的英文术语。表中的“推荐中文”用于理解和中文写作，不要求改写源码标识符、协议字段、产品名称或命令行参数。
 
 建议遵守以下约定：
 
@@ -35,6 +35,8 @@
 | Worker / Kernel process / OS Sandbox | Worker 与 Kernel 可隔离生命周期和故障；只有 OS 或外部 enforcement 才限制真实系统权限。 |
 | Network capability / Managed proxy | Capability 决定进程是否有网络能力；Proxy 决定流量是否经过域名和方法策略。 |
 | Foreground / Background / Fresh / Fork | 前后台描述调度；Fresh/Fork 描述 Subagent 初始 Context，二者是不同维度。 |
+| Event log / Session Surface | Event log 保存 append-only 审计事实；Surface 决定当前模型历史，replace 只 shadow 旧节点而不删除事件。 |
+| Plugin loaded / contribution visible | 插件 ACTIVE 不表示其贡献对所有 Agent 可见；Scope chain 仍决定 Prompt、Tool、Skill 与 Service 的读取视图。 |
 
 ## 二、基础架构与 Agent Loop
 
@@ -45,13 +47,22 @@
 | Agent Runtime | 智能体运行时 | 驱动“模型 → 工具 → 结果 → 模型”并维护运行控制的内核。 |
 | Coding Agent | 编码智能体 | 加入文件、搜索、编辑、Shell、项目感知和验证能力的 Agent 产品。 |
 | Agent Harness | 智能体运行框架 | 包住模型的完整系统，包括 Runtime、Context、Tools、State、Safety、UI 和 Extension。 |
+| Capability seam | 能力接缝 / 能力边界 | Provider 与 consumer 通过稳定 Service、event 或 registry contract 组合的边界。 |
+| Cordis | Cordis 插件运行框架 | DeepSeek Harness 用于 Context、Service、typed event、Fiber 与 reversible effect 的组合底座。 |
+| Cordis Context | Cordis 作用域上下文 | 插件访问当前 scope 的 Service、event 与 effect API 的视图，不等同于 Model Context。 |
+| Service | 服务能力 | 由 provider 插件发布、consumer 通过依赖注入访问的可替换能力。 |
+| Fiber | 插件纤程 / 生命周期实例 | 管理一个插件 PENDING、LOADING、ACTIVE、UNLOADING、DISPOSED 或 FAILED 状态的运行实例。 |
+| Effect | 可逆副作用 | 插件激活时建立并返回 disposer、在 Fiber 卸载时撤销的注册或资源变化。 |
+| Profile | 部署组合档 | DeepSeek Harness home 中组合 Bundles、Patch 与 agent preset 的具名部署入口。 |
+| Bundle | 插件组合包 | 可复用的一组 Cordis Patch，用于装配 base、web-app 或 headless 等能力。 |
+| Patch | 组合补丁 | 按稳定 id 增删或替换 composition row 的配置层；固定版本同 id config 为整段替换。 |
 | RLM | 递归语言模型 / RLM 编程模型 | Prime Agent 中以持久 IPython 操作 Context、调用能力并可递归创建 child Agent 的执行方式。 |
 | Persistent Kernel | 持久计算内核 | 跨 Tool Calls 与 Compaction 保留 Python namespace 的长寿命 IPython 进程。 |
 | Host Bridge | 宿主桥接 | Kernel 通过 typed request 请求 Provider、Session、Goal 或 child 等 Host 权威操作的协议边界。 |
 | Agent Loop / Loop | 智能体循环 / 执行循环 | 重复构造请求、调用模型、执行工具、回灌结果并判断是否继续的控制结构。 |
 | Query | 一次查询执行 | 从一条输入开始，由 Harness 驱动到停止、失败或等待用户的完整执行链。 |
-| Turn | 轮次 | 一次模型请求及其输出；各项目边界略有差异，通常在下一次模型调用前结束。 |
-| Step | 执行步 | Harness 为一次阶段性模型或工具推进记录的单位，不一定等同于 Turn。 |
+| Turn | 轮次 | 一次用户意图的处理边界；各项目不同，DeepSeek Harness 的一个 Turn 可含 0..n Step。 |
+| Step | 执行步 | 一次阶段性模型或工具推进；DeepSeek Harness 中明确为一次模型请求及其工具批次。 |
 | Continuation | 继续执行 | 得到新的 Tool Result、Steering 或其他 observation 后，再构造下一次模型请求。 |
 | Stop condition | 停止条件 | 最终文本、预算耗尽、Abort、不可恢复错误或 Hook 决策等结束边界。 |
 | Stop reason | 停止原因 | 记录正常结束、工具调用、超限、取消或错误等终止原因。 |
@@ -71,6 +82,8 @@
 | Admitted | 已接纳 | 输入已经可靠保存，但不表示模型已开始执行。 |
 | Promoted | 已推进 / 已转为模型可见 | Pending input 已在安全边界进入 Session history。 |
 | Durable inbox | 持久输入箱 | 保存已接纳、尚待执行或推进的 Session 输入。 |
+| `next-step` inbox | 下一步输入箱 | DeepSeek Harness 中在当前 Turn 的下一 Step claim 的 steer / inject 队列。 |
+| `next-turn` inbox | 下一轮输入箱 | DeepSeek Harness 中等待当前 Turn 结束后再 claim 的 followup 队列。 |
 | Wake | 唤醒通知 | 告诉执行器“可能有新工作”；可以合并，不应当作可靠业务事实。 |
 | Drain | 排空执行 | 一个执行 owner 串行处理当前 Session 中可推进的工作。 |
 | Coordinator | 协调器 | 保证同一 Session 单执行链、不同 Session 可并发的调度组件。 |
@@ -108,6 +121,7 @@
 | System context | 系统环境上下文 | cwd、平台、Git 状态和运行环境等系统层信息。 |
 | User context | 用户上下文 | 项目指令、Memory、日期等作为消息前缀进入的上下文。 |
 | Context source | 上下文来源 | 具有稳定身份、加载、baseline、update 和 removed 语义的信息来源。 |
+| Runtime Context | 运行时上下文 | DeepSeek Harness 将动态环境内容按来源渲染为 durable `user/message` snapshot 的机制。 |
 | Baseline | 基线 | 某一时间点完整、稳定的环境或规则表示。 |
 | Snapshot | 快照 | 某一时刻的结构化完整状态，用于比较、恢复或投影。 |
 | Context update | 上下文更新 | Baseline 之后按时间顺序告诉模型的环境或规则变化。 |
@@ -121,6 +135,7 @@
 | Deferred loading | 延迟加载 | 只有搜索或调用时才加载完整内容或 schema。 |
 | Prompt cache | 提示缓存 | Provider 对稳定请求前缀的缓存；前缀变化会影响命中率。 |
 | Tool-result budget | 工具结果预算 | 限制 Tool Result 在 Context 中占用的 token 或字符数量。 |
+| Tool-result pruning | 工具结果裁剪 | 对超大 ToolResult 保留 head / marker / tail，并用 Surface replacement shadow 原节点。 |
 | Snip / truncation | 截取 / 截断 | 删除或缩短局部大输出，同时明确告诉模型内容不完整。 |
 | Microcompact | 微压缩 | 清理旧的、可重新获取的 Tool Result，尽量保留消息结构。 |
 | Compaction | 上下文压缩 | 用结构化摘要、近期原文和边界重建后续活动 Context。 |
@@ -142,6 +157,10 @@
 | Tool definition | 工具定义 | 本轮模型可见的名称、说明与输入 schema，不包含直接宿主执行权。 |
 | Tool schema | 工具模式 | 约束输入或输出结构的 JSON Schema、Zod 或其他 codec。 |
 | Tool registry | 工具注册表 | 管理候选工具、当前实现和本轮可见目录的组件。 |
+| Policy waterfall | 策略瀑布链 | 多个插件按顺序检查、收紧或包裹一次 Tool execution 的组合事件链。 |
+| Monotonic guard | 单调收紧守卫 | 防止后续 policy 阶段重新放宽已经拒绝或收紧的安全决定。 |
+| Code mode | 代码工具模式 | 模型只直接调用 `run_code`，内部程序再经 Tool SDK 调用受 scope 约束的工具。 |
+| Exclusive barrier | 独占屏障 | 写或未知并发性的 Tool 等待此前调用完成，并阻止后续调用越过的调度边界。 |
 | Materialization | 实体化 / 本轮固化 | 为一次模型 Turn 固定 Tool definitions 与 settlement identity。 |
 | Tool visibility | 工具可见性 | 决定本轮模型是否看到某项能力，不等于调用已获授权。 |
 | Tool call / `tool_use` | 工具调用请求 | 模型提出的工具名、调用 ID 与结构化参数。 |
@@ -183,6 +202,10 @@
 | Generation cursor | 代际游标 | `{generation, sequence}` 事件位置；generation 变化后旧 sequence 不再可比较，应以 snapshot 对齐。 |
 | Replay | 重放 | 从事件日志重新读取事实并重建状态。 |
 | Projection | 投影 | 从完整事实构造面向模型、客户端或查询的特定视图。 |
+| Session Surface | 会话活动表面 | DeepSeek Harness 从 append-only log 维护的模型活动节点集合。 |
+| `surfaceOp` | 表面操作 | message event 声明的 append 或 replace 操作；replace shadow 区间但不删除审计事件。 |
+| Request header | 请求头快照 | 保存一次模型请求的 provider、model、config、system 与 tools 的 durable 记录。 |
+| Write-behind | 异步延后写入 | 事件热路径先接受，Persistence 再按批次落盘；需要 flush 契约区分内存接纳与持久完成。 |
 | Client projection | 客户端投影 | UI 为渲染维护的当前状态，不是 Server 的唯一真相。 |
 | Reducer | 归约器 | 按顺序把 Event 应用到 State 的确定性函数。 |
 | Hydration | 状态装载 | 用 REST 或存储快照初始化客户端状态，再与 live delta 合并。 |
@@ -195,6 +218,7 @@
 | Batch / batching | 批处理 | 在短时间窗口内归约多个 delta，减少 UI 重复渲染。 |
 | Operational state | 运行态 | active owner、pending permission、tool fiber 等当前进程状态。 |
 | Execution owner | 执行所有者 | 当前负责推进某个 Session 的进程或协调器实例。 |
+| Activation | 运行激活实例 | DeepSeek Harness continuable child 的 process-local AgentHandle owner；durable Session 最多对应一个 live Activation。 |
 
 ## 七、持久化、恢复与分支
 
@@ -262,6 +286,8 @@
 | Canonical path | 规范路径 | 解析相对路径、符号链接等后用于权限判断的稳定目标。 |
 | Symlink | 符号链接 | 可能让表面位于 workspace 的路径指向外部真实目标，必须纳入 canonical 检查。 |
 | Fail closed | 失败时拒绝 | 规则损坏、来源不可验证或 Sandbox 不可用时默认阻止，而不是放行。 |
+| Enforcement level | 强制等级 | Sandbox backend 显式报告 full 或 partial，避免把平台能力不足伪装成完整隔离。 |
+| FS observation policy | 文件观察策略 | 写入前要求已读取版本或 CAS，未观察编辑返回 `FS_NOT_OBSERVED`；不是 OS security boundary。 |
 | Sandbox denial | 沙箱拒绝 | 命令已启动，但真实访问被 OS 或网络策略阻止。 |
 | Network capability | 网络能力 | Sandbox 是否允许进程获得网络访问能力。 |
 | Managed proxy | 受控代理 | 对允许的流量继续执行域名、方法、本地绑定或 socket 策略。 |
@@ -300,6 +326,7 @@
 | MCP | 模型上下文协议 | 连接外部 tools、resources 和 prompts 的标准协议。 |
 | Plugin | 插件 | 将 Skills、Agents、Hooks、MCP 等能力组合、命名空间化并分发的边界。 |
 | Extension | 扩展机制 | 为 Harness 增加指令、知识、工具、策略或 Agent 的方式。 |
+| Dynamic Cordis package | 动态 Cordis 包 | DeepSeek Harness 中由模型 define / run / stop / undefine 的进程内临时扩展；不自动持久，`node:vm` 不是安全边界。 |
 | Agent definition | Agent 定义 | 描述专用 Agent 的 system prompt、model、tools、permissions、Skills 和 limits。 |
 | Custom Agent | 自定义 Agent | 具有独立 Context、工具或模型边界的可复用 Agent 角色。 |
 | Memory | 长期记忆 | 跨 Session 保存、未来可能复用且不易重新推导的少量知识。 |
@@ -308,6 +335,9 @@
 | Topic file | 主题记忆文件 | 保存某个领域详细长期知识、需要时再加载的文件。 |
 | Recall | 回忆 / 检索记忆 | 根据当前任务选择少量相关 Memory topic 注入 Context。 |
 | Subagent | 子智能体 | 拥有独立 loop、Context、Tool view、permission view 和 transcript 的 Agent。 |
+| Continuable child | 可续行子智能体 | 使用 durable Session / Inbox 接受多轮 followup，并按需建立 process-local Activation 的 child。 |
+| Job | 后台工作记录 | 以 owner Session 授权和查询的通用后台 operation registry。 |
+| Workflow | 编排工作流 | 在 worker thread 中运行 orchestration script 并启动 Subagents 的能力；worker / vm 不构成授权边界。 |
 | Fresh agent | 全新上下文 Agent | 从零对话 Context 启动，父 Agent 必须提供完整 brief。 |
 | Fork agent | 继承上下文 Agent | 继承父 Context 后启动独立 loop。 |
 | Foreground agent | 前台 Agent | 父 Agent 等待其完成后再继续。 |
@@ -346,13 +376,14 @@
 | Seatbelt | macOS 沙箱机制 | 通过动态 profile 限制进程文件和网络访问。 |
 | `sandbox-exec` | macOS 沙箱启动器 | 使用 Seatbelt profile 启动受限进程的固定系统工具。 |
 | bubblewrap / bwrap | Linux 隔离工具 | 使用 namespace 和 bind mount 构造受限文件与网络视图。 |
+| Landlock | Linux 文件访问控制 | Linux 内核的非特权文件访问限制机制；旧 ABI 可能只能提供 partial enforcement。 |
 | Namespace | Linux 命名空间 | 隔离 mount、network、process 等系统资源视图。 |
 | seccomp | 系统调用过滤 | Linux 内核限制进程可调用系统调用的机制。 |
 | `no_new_privs` | 禁止获得新权限 | Linux 进程属性，阻止后续 `exec` 获得额外 privilege。 |
 | Restricted token | 受限访问令牌 | Windows 通过收紧身份和能力启动子进程的机制。 |
 | Capability SID | 能力安全标识 | Windows 用于配合 token 与 ACL 表达受限能力的 SID。 |
 
-## 十二、五个项目的常见源码名速查
+## 十二、六个项目的常见源码名速查
 
 ### Pi Mono
 
@@ -432,6 +463,23 @@
 | `GoalState` | durable objective、status、usage、budget 与 continuation 计数。 |
 | `AutonomousRuntimeState` | Gate、continuation / turn / token / time limit 与 workspace fingerprint 状态。 |
 | `AgentCronJob` | user heartbeat、RLM heartbeat 或 general schedule 的持久 job。 |
+
+### DeepSeek Harness
+
+| 源码名 | 中文理解 |
+| --- | --- |
+| `Context` | Cordis 的 scoped plugin context，提供 Service、event 与 effect API，不是模型 Context。 |
+| Fiber | 一个插件的加载、ACTIVE、卸载与失败生命周期实例。 |
+| `ctx.effect()` | 注册 setup / disposer 对，使插件 side effect 随 Fiber 卸载撤销。 |
+| Profile / Bundle / Patch | 具名部署组合、可复用组合层与按 id 定位的配置 overlay。 |
+| `ReactLoopAgent` | 以 idle / maintenance / running phase 驱动 durable Inbox、Turn 与 Step 的 Agent 实现。 |
+| `agent/inbox/spliced` | 记录 next-step / next-turn 队列变化、供恢复重放的 Session event。 |
+| `request/header` | 固化 provider、model、config、system 与 tool definitions 的请求快照。 |
+| `ToolRuntime` | 统一执行参数快照、policy、Approval、guard、body、finalizer 与 canonical result 的边界。 |
+| `SessionSurface` | 通过 append / replace 从完整 event log 投影模型活动历史。 |
+| `SESSION_FORMAT_VERSION` | 固定版本为 `0`；不支持的持久格式会被拒绝。 |
+| Activation | continuable child 的 process-local live owner；child Session 本身可持久恢复。 |
+| `dynamicCordisRunner` | 管理会话拥有的进程内动态 Cordis 定义与 run / stop 生命周期的 Service。 |
 
 ## 维护规则
 

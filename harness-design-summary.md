@@ -1,17 +1,18 @@
-# 五个 Agent Harness 的优秀设计与自研基线
+# 六个 Agent Harness 的优秀设计与自研基线
 
 [返回首页](README.md) · [学习路线](00-roadmap.md) · [横向对照](comparison.md)
 
 ## 文档目标
 
-本文基于现有五个阶段的学习记录，提炼适合自研 Harness Agent 的设计原则。目标不是完整复刻某一个项目，而是组合各自最成熟的部分：
+本文基于现有六个阶段的学习记录，提炼适合自研 Harness Agent 的设计原则。目标不是完整复刻某一个项目，而是组合各自最成熟的部分：
 
 ```text
 Pi Mono     → 简洁、可测试的 Runtime 内核
 OpenCode    → 产品化、持久化与状态同步
 Codex CLI   → 权限收敛、审批与 OS Sandbox
 Claude Code → 长 Context、Memory、扩展与 Multi-Agent
-Prime Agent  → 持久 Python、RLM、Daemon continuity 与 Continual Harness
+Prime Agent     → 持久 Python、RLM、Daemon continuity 与 Continual Harness
+DeepSeek Harness → Cordis capability seams、可逆插件生命周期与模型可见事实日志
 ```
 
 最终希望得到一个同时满足以下目标的 Harness：
@@ -21,7 +22,7 @@ Prime Agent  → 持久 Python、RLM、Daemon continuity 与 Continual Harness
 - **高性能**：控制 Context、工具输出、事件和渲染成本，在安全边界内并行执行。
 - **可演进**：Runtime、Provider、Tool、安全、持久化和扩展机制可以分别替换或增强。
 
-## 一、五个项目最值得学习的设计
+## 一、六个项目最值得学习的设计
 
 | 项目 | 最优秀的设计 | 对自研 Harness 的价值 |
 | --- | --- | --- |
@@ -30,6 +31,7 @@ Prime Agent  → 持久 Python、RLM、Daemon continuity 与 Continual Harness
 | Codex CLI | Approval 与 OS Sandbox 正交、canonical Permission Profile | 建立真正可信的最小权限执行底座。 |
 | Claude Code | Context admission、Compaction、Session DAG、Memory、Subagent 和扩展生命周期 | 支撑长任务、长期知识和复杂 Agent 编排。 |
 | Prime Agent | Persistent IPython、typed Host Bridge、RLM、Daemon 与 Continual Harness | 支撑程序化推理、递归委派、断线恢复和可审计的持续改进。 |
+| DeepSeek Harness | Cordis Service / Fiber / Effect、scoped composition 与 durable Surface | 让核心与扩展共享可组合、可撤销、可观测的生命周期。 |
 
 ### Pi Mono：最干净的 Runtime 内核
 
@@ -244,11 +246,52 @@ Continual Harness 只保存 prompt、memory、skill、subagent 四类补充 entr
 
 证据与详细流程见 [Prime Agent 阶段目录](05-prime-agent/README.md)和[端到端复盘](05-prime-agent/10-end-to-end-review.md)。
 
+### DeepSeek Harness：最彻底的可组合能力图
+
+DeepSeek Harness 最值得学习的是核心与扩展采用同一种 Cordis lifecycle。模型 adapter、Agent loop、Tools、Session、Persistence、Approval、Sandbox 和 UI 都是依赖图中的插件，而不是一部分硬编码、一部分另建扩展系统。
+
+#### Profile、Scope 与 reversible effects
+
+```text
+Profile + Bundles + Patch overlays
+  → scoped Cordis Context
+  → Service injection 决定 Fiber 激活
+  → event / registry / effect 贡献
+  → unload 时统一撤销
+```
+
+- Profile 是 deployment composition；Bundle 是可叠加 Patch 层。
+- `inject` 决定依赖激活，不把 YAML 行顺序当隐含契约。
+- Global 与 agent scope 可以提供同名 Prompt、Tool 或 Skill，近层 shadow 远层。
+- `ctx.on()`、registry registration 与 `ctx.effect()` 都随 Fiber 卸载回滚。
+- 加载失败进入 FAILED，不用空 Service 或假成功掩盖 composition error。
+
+这套设计适合作为自研 Harness 的插件底座：先定义 capability seam、scope 与 disposer，再讨论第三方分发格式。
+
+#### 模型可见事实与 Session Surface
+
+DeepSeek Harness 把“model-visible means logged”落实到请求边界：Runtime Context 变化形成 durable snapshot，request header 固化 provider / model / system / tools，raw chunks 与规范 assistant message 分开保存。
+
+Session 是 append-only event log，Surface 再用 append / replace 决定活动模型历史。Compaction shadow 旧节点但不删除审计事件；只有 Surface generation 真正推进后才重试 context overflow。
+
+这比直接改写 messages 数组更适合动态 composition，因为每一次 Prompt、Tool view 与 Context 变化都能解释。
+
+#### 统一 Tool、安全与长任务 capability
+
+- Tool 参数在 policy 前 lossless snapshot 并冻结；pre、Approval、guard、around、body、post 与 finalizer 顺序固定。
+- 只有 classifier 精确返回 true 才并行；exclusive 构成 barrier，最终 commit 仍按模型顺序。
+- Approval、FS observation / containment 与 Shell OS runner 分层，confined backend 缺失时 fail closed。
+- continuable Subagent 使用 durable Session + process-local Activation；Job、Goal、Schedule 与 Workflow 分别声明 ownership。
+- Cordis plugin、Skill、MCP、Hook 和动态 Cordis package 按能力、生命周期与信任面分开。
+
+证据与详细流程见 [DeepSeek Harness 阶段目录](06-deepseek-harness/README.md)和[端到端复盘](06-deepseek-harness/10-skills-mcp-hooks-dynamic-cordis-review.md)。
+
 ## 二、建议的自研总体架构
 
 ```mermaid
 flowchart TD
-    UI["CLI / TUI / SDK / API"] --> AD["Durable Input Admission"]
+    PF["Profile / Plugin Composition"] --> UI["CLI / TUI / SDK / API"]
+    PF --> AD["Durable Input Admission"]
     AD --> CO["Per-session Coordinator"]
     CO --> CT["Context Admission / Turn Builder"]
     CT --> ML["Model Adapter"]
@@ -267,6 +310,9 @@ flowchart TD
     HB --> TE
     EV --> LR["Goal / Schedule / Recovery"]
     LR --> CO
+    PF --> CT
+    PF --> TE
+    PF --> EV
 ```
 
 ### 建议的模块边界
@@ -284,6 +330,7 @@ flowchart TD
 | Memory / Multi-Agent | 长期知识、独立 loop、Tasks、Mailbox。 | 绕过父级权限和状态协议。 |
 | Programmatic Runtime / Host Bridge | 持久计算 namespace、typed authority calls、Kernel lifecycle。 | 不受约束地持有 Provider、Session 或宿主权限。 |
 | Long-task Controller | Goal、continuation policy、schedule、generation recovery。 | 把 uncertain side effect 宣称为完成或自动重放。 |
+| Composition / Plugin Lifecycle | Profile、scope、Service dependency、Fiber state 与 reversible effects。 | 让卸载后的注册泄漏，或把配置行顺序当依赖契约。 |
 
 ## 三、必须坚持的核心不变量
 
@@ -338,6 +385,13 @@ flowchart TD
 32. 已完成 mutation 可以按稳定 command ID 去重，结果不确定的副作用必须 reconciliation，不能自动重放。
 33. Objective、immediate continuation policy 与 timed schedule 必须是三种状态。
 34. 自动改进只能修改有 scope、来源、历史和 rollback 的补充状态，核心安全与 base prompt 不得由轨迹静默改写。
+
+### 可组合性与模型可见性
+
+35. 核心能力和第三方扩展都必须声明 provider、consumer、scope 与 disposer。
+36. Prompt、Tool view 或 Runtime Context 的动态变化只要模型可见，就必须形成可审计 snapshot。
+37. 并发只能重叠允许并发的执行体，不能改变 policy、commit 和 Session observation 顺序。
+38. `node:vm`、worker thread、进程分离和应用内路径 containment 都不能冒充 OS security boundary。
 
 ## 四、好用、安全和高性能的具体落点
 
@@ -409,6 +463,13 @@ flowchart TD
 - Worker generation cursor、snapshot recovery、command journal 与 uncertain mutation。
 - 最后再加入有 scope、conflict check、history 和 rollback 的 refinement。
 
+### 第 7 阶段：可组合部署与可逆扩展
+
+- 用 Profile / Bundle 描述 deployment composition，并为配置 overlay 定义稳定 identity。
+- 为 Service、Prompt、Tool、Skill 与 event contribution 建立统一 scope chain。
+- 所有注册和 side effect 绑定 Fiber disposer，支持 fail-loud load 与 quiescent unload。
+- 最后再接入 MCP、兼容 Hooks 与动态扩展；明确能力子集、持久性和信任等级。
+
 不要一开始就实现 Agent Teams 或自动 Refinement。一个不能可靠保存状态、限制副作用和恢复 Context 的单 Agent，扩展成多个或允许其持久改变未来行为，只会放大错误、成本和竞态。
 
 ## 六、不能直接照搬的边界
@@ -418,6 +479,7 @@ flowchart TD
 - Codex CLI 阶段聚焦 Sandbox 主线，没有重新验证完整 Context、Session 和 Multi-Agent；三平台实验步骤已提供，但尚未在本仓库记录真实执行结果。
 - Claude Code 的公开功能以官方文档为准；内部实现分析来自非官方 source-map 还原，只适合借鉴设计，不能当作官方稳定契约。
 - Prime Agent 的 Worker、Kernel、Host allowlist 与 Extension Hook 都不是 OS Sandbox；固定版本上游 runtime 未安装或真实运行，Daemon 文档标题的 v4 也滞后于源码 v7 / schema 15。
+- DeepSeek Harness 处于 developer preview；固定版本上游 workspace、Provider、MCP、Web UI 与跨平台 Sandbox 未真实运行。MCP 只桥接 Tools，动态 Cordis 定义只存进程内，`node:vm` 不是安全边界。
 - Conversation rewind、文件恢复和外部世界状态回滚是三件事，任何一个项目都不能自动提供通用事务回滚。
 
 ## 总结
@@ -430,6 +492,7 @@ Pi Mono 的小内核
 + Codex CLI 的 canonical permissions 与 OS Sandbox
 + Claude Code 的 Context lifecycle、Memory 和 Agent protocol
 + Prime Agent 的 persistent Kernel、typed Host、Daemon continuity 与 auditable refinement
++ DeepSeek Harness 的 scoped capability graph、reversible effects 与 logged model visibility
 ```
 
-真正优秀的 Harness 不是工具最多，而是每一层都有清晰、可验证的责任：模型提出意图，Runtime 控制 continuation，Programmatic Kernel 组合计算，typed Host 保留权威操作，Tool contract 描述副作用，Approval 处理授权，Sandbox 强制边界，Event Log 保存事实，Context Manager 选择下一轮真正需要的信息。
+真正优秀的 Harness 不是工具最多，而是每一层都有清晰、可验证的责任：Composition 决定当前能力图，模型提出意图，Runtime 控制 continuation，Programmatic Kernel 组合计算，typed Host 保留权威操作，Tool contract 描述副作用，Approval 处理授权，Sandbox 强制边界，Event Log 保存事实，Context Manager 选择下一轮真正需要的信息，Fiber lifecycle 则保证动态贡献能够完整撤销。

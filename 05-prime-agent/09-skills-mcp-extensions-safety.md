@@ -101,4 +101,4 @@ node examples/05-prime-agent/09-extension-routing/index.mjs
 
 ## 下一步
 
-最后一课把输入接纳、RLM、Daemon、Context、长期状态和安全边界串成一条端到端调用链，并完成五个项目的最终对照。
+最后一课把输入接纳、RLM、Daemon、Context、长期状态和安全边界串成一条端到端调用链，并完成截至本阶段五个项目的阶段性对照。

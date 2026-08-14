@@ -1,6 +1,6 @@
 # Agent Harness 学习笔记
 
-这是一套从最小 Agent Runtime 出发，逐步学习完整 Coding Agent、生产级 Sandbox、复杂 Harness 架构，最终研究 RLM 与持续进化 Harness 的公开学习笔记。
+这是一套从最小 Agent Runtime 出发，逐步学习完整 Coding Agent、生产级 Sandbox、复杂 Harness 架构、RLM 长任务系统，最终研究可组合插件化 Harness 的公开学习笔记。
 
 ## 学习顺序
 
@@ -10,6 +10,7 @@ Pi Mono
   → Codex CLI
   → Claude Code
   → Prime Agent
+  → DeepSeek Harness
 ```
 
 完整目标和阶段关系见[学习路线](00-roadmap.md)。
@@ -25,9 +26,10 @@ Pi Mono
 | 第三阶段：Codex CLI | [03-codex-cli/README.md](03-codex-cli/README.md) |
 | 第四阶段：Claude Code 完整 Harness | [04-claude-code/README.md](04-claude-code/README.md) |
 | 第五阶段：Prime Agent RLM 与持续进化 Harness | [05-prime-agent/README.md](05-prime-agent/README.md) |
+| 第六阶段：DeepSeek Harness 可组合插件化 Harness | [06-deepseek-harness/README.md](06-deepseek-harness/README.md) |
 | 课程示例 | [examples/README.md](examples/README.md) |
-| 五个 Harness 横向对照 | [comparison.md](comparison.md) |
-| 五个 Harness 的优秀设计与自研基线 | [harness-design-summary.md](harness-design-summary.md) |
+| 六个 Harness 横向对照 | [comparison.md](comparison.md) |
+| 六个 Harness 的优秀设计与自研基线 | [harness-design-summary.md](harness-design-summary.md) |
 | Agent Harness 术语对照表 | [glossary.md](glossary.md) |
 | 单次学习记录模板 | [learning-log-template.md](learning-log-template.md) |
 

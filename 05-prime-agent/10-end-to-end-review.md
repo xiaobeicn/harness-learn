@@ -1,6 +1,6 @@
-# 第 10 课：长任务端到端复盘与五项目对照
+# 第 10 课：长任务端到端复盘与阶段性五项目对照
 
-[返回本阶段目录](README.md) · [上一课](09-skills-mcp-extensions-safety.md) · [官方 Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/architecture.md) · [课程实验](../examples/05-prime-agent/10-end-to-end/index.mjs) · [五项目横向对照](../comparison.md)
+[返回本阶段目录](README.md) · [上一课](09-skills-mcp-extensions-safety.md) · [官方 Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/architecture.md) · [课程实验](../examples/05-prime-agent/10-end-to-end/index.mjs) · [六项目横向对照](../comparison.md)
 
 ## 核心问题
 
@@ -84,7 +84,7 @@ Continual Harness 只允许对 prompt / memory / skill / subagent 补充条目�
 
 两者不是功能排名。Claude Code 更强调结构化 Tool 和显式协调对象；Prime Agent 更强调持久 Python 控制面、递归计算与 Daemon continuity。
 
-## 五个项目各取一块
+## 截至本阶段五个项目各取一块
 
 ```text
 Pi Mono     → 小而可测试的 Agent loop
@@ -136,4 +136,4 @@ node examples/05-prime-agent/10-end-to-end/index.mjs
 
 ## 后续
 
-回到[五个 Agent Harness 横向对照](../comparison.md)，逐列检查哪些结论来自源码、文档、独立实验或仍未验证。若升级 Prime Agent commit，首先复核 Tool catalog、Daemon protocol / schema、RLM API 与安全边界。
+继续进入[第六阶段：DeepSeek Harness](../06-deepseek-harness/README.md)，再回到[六个 Agent Harness 横向对照](../comparison.md)，逐列检查哪些结论来自源码、文档、独立实验或仍未验证。若升级 Prime Agent commit，首先复核 Tool catalog、Daemon protocol / schema、RLM API 与安全边界。

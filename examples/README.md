@@ -28,17 +28,28 @@ examples/
 │   ├── 10-subagent-context/index.mjs
 │   ├── 11-team-coordination/index.mjs
 │   └── 12-extension-routing/index.mjs
-└── 05-prime-agent/
-    ├── 01-architecture-map/index.mjs
-    ├── 02-rlm-loop/index.mjs
-    ├── 03-host-bridge/index.mjs
-    ├── 04-subagent-messaging/index.mjs
-    ├── 05-session-compaction/index.mjs
-    ├── 06-continual-harness/index.mjs
-    ├── 07-daemon-recovery/index.mjs
-    ├── 08-long-running-policy/index.mjs
-    ├── 09-extension-routing/index.mjs
-    └── 10-end-to-end/index.mjs
+├── 05-prime-agent/
+│   ├── 01-architecture-map/index.mjs
+│   ├── 02-rlm-loop/index.mjs
+│   ├── 03-host-bridge/index.mjs
+│   ├── 04-subagent-messaging/index.mjs
+│   ├── 05-session-compaction/index.mjs
+│   ├── 06-continual-harness/index.mjs
+│   ├── 07-daemon-recovery/index.mjs
+│   ├── 08-long-running-policy/index.mjs
+│   ├── 09-extension-routing/index.mjs
+│   └── 10-end-to-end/index.mjs
+└── 06-deepseek-harness/
+    ├── 01-capability-map/index.mjs
+    ├── 02-reversible-plugin/index.mjs
+    ├── 03-inbox-agent-loop/index.mjs
+    ├── 04-context-snapshot/index.mjs
+    ├── 05-ordered-tool-execution/index.mjs
+    ├── 06-session-surface/index.mjs
+    ├── 07-compaction-pruning/index.mjs
+    ├── 08-safety-decision/index.mjs
+    ├── 09-durable-continuation/index.mjs
+    └── 10-extension-routing/index.mjs
 ```
 
 | 阶段 | 课程 | 示例 | 运行方式 |
@@ -69,7 +80,17 @@ examples/
 | Prime Agent | [第 7 课：Daemon、Worker、重连与崩溃恢复](../05-prime-agent/07-daemon-worker-recovery.md) | [`index.mjs`](05-prime-agent/07-daemon-recovery/index.mjs) | `node examples/05-prime-agent/07-daemon-recovery/index.mjs` |
 | Prime Agent | [第 8 课：Goal、Autonomous、Heartbeat 与 Schedule](../05-prime-agent/08-long-running-continuation-policies.md) | [`index.mjs`](05-prime-agent/08-long-running-policy/index.mjs) | `node examples/05-prime-agent/08-long-running-policy/index.mjs` |
 | Prime Agent | [第 9 课：Skills、MCP、Extensions 与信任边界](../05-prime-agent/09-skills-mcp-extensions-safety.md) | [`index.mjs`](05-prime-agent/09-extension-routing/index.mjs) | `node examples/05-prime-agent/09-extension-routing/index.mjs` |
-| Prime Agent | [第 10 课：长任务端到端复盘与五项目对照](../05-prime-agent/10-end-to-end-review.md) | [`index.mjs`](05-prime-agent/10-end-to-end/index.mjs) | `node examples/05-prime-agent/10-end-to-end/index.mjs` |
+| Prime Agent | [第 10 课：长任务端到端复盘与阶段性五项目对照](../05-prime-agent/10-end-to-end-review.md) | [`index.mjs`](05-prime-agent/10-end-to-end/index.mjs) | `node examples/05-prime-agent/10-end-to-end/index.mjs` |
+| DeepSeek Harness | [第 1 课：来源边界、Cordis 与总体架构](../06-deepseek-harness/01-source-boundary-cordis-architecture.md) | [`index.mjs`](06-deepseek-harness/01-capability-map/index.mjs) | `node examples/06-deepseek-harness/01-capability-map/index.mjs` |
+| DeepSeek Harness | [第 2 课：Profile、Bundle、Patch 与插件生命周期](../06-deepseek-harness/02-profile-bundle-patch-plugin-lifecycle.md) | [`index.mjs`](06-deepseek-harness/02-reversible-plugin/index.mjs) | `node examples/06-deepseek-harness/02-reversible-plugin/index.mjs` |
+| DeepSeek Harness | [第 3 课：Inbox、Turn、Step 与 Agent Loop](../06-deepseek-harness/03-inbox-turn-step-agent-loop.md) | [`index.mjs`](06-deepseek-harness/03-inbox-agent-loop/index.mjs) | `node examples/06-deepseek-harness/03-inbox-agent-loop/index.mjs` |
+| DeepSeek Harness | [第 4 课：System Prompt、Runtime Context 与 LLM Streaming](../06-deepseek-harness/04-system-prompt-runtime-context-llm-streaming.md) | [`index.mjs`](06-deepseek-harness/04-context-snapshot/index.mjs) | `node examples/06-deepseek-harness/04-context-snapshot/index.mjs` |
+| DeepSeek Harness | [第 5 课：Tool Registry、策略流水线与有序并发](../06-deepseek-harness/05-tool-registry-policy-ordered-concurrency.md) | [`index.mjs`](06-deepseek-harness/05-ordered-tool-execution/index.mjs) | `node examples/06-deepseek-harness/05-ordered-tool-execution/index.mjs` |
+| DeepSeek Harness | [第 6 课：Session Event Log、Surface、Persistence 与 Fork](../06-deepseek-harness/06-session-log-surface-persistence-fork.md) | [`index.mjs`](06-deepseek-harness/06-session-surface/index.mjs) | `node examples/06-deepseek-harness/06-session-surface/index.mjs` |
+| DeepSeek Harness | [第 7 课：Compaction、Tool-result Pruning 与 Context Overflow](../06-deepseek-harness/07-compaction-pruning-context-overflow.md) | [`index.mjs`](06-deepseek-harness/07-compaction-pruning/index.mjs) | `node examples/06-deepseek-harness/07-compaction-pruning/index.mjs` |
+| DeepSeek Harness | [第 8 课：Approval、Filesystem、Shell 与跨平台 Sandbox](../06-deepseek-harness/08-approval-filesystem-shell-sandbox.md) | [`index.mjs`](06-deepseek-harness/08-safety-decision/index.mjs) | `node examples/06-deepseek-harness/08-safety-decision/index.mjs` |
+| DeepSeek Harness | [第 9 课：Subagent、Jobs、Goal、Schedule 与 Workflow](../06-deepseek-harness/09-subagent-jobs-goal-schedule-workflow.md) | [`index.mjs`](06-deepseek-harness/09-durable-continuation/index.mjs) | `node examples/06-deepseek-harness/09-durable-continuation/index.mjs` |
+| DeepSeek Harness | [第 10 课：Skills、MCP、Hooks、动态 Cordis 与六项目复盘](../06-deepseek-harness/10-skills-mcp-hooks-dynamic-cordis-review.md) | [`index.mjs`](06-deepseek-harness/10-extension-routing/index.mjs) | `node examples/06-deepseek-harness/10-extension-routing/index.mjs` |
 
 Pi Mono 示例在命令末尾加入 `--invalid-args`，可以运行同一课程的工具参数校验失败场景。
 

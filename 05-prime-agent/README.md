@@ -29,7 +29,7 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 - [ ] 说明 `/refine` 的 plan / apply、local / global、冲突检查与 rollback 边界。
 - [ ] 解释 Daemon generation cursor、snapshot recovery、command journal 和 uncertain side effect。
 - [ ] 区分 Goal、Autonomous、Heartbeat、RLM heartbeat 与 Schedule。
-- [ ] 明确 Worker / Kernel 进程隔离不是 OS Sandbox，并完成五个 Harness 的最终对照。
+- [ ] 明确 Worker / Kernel 进程隔离不是 OS Sandbox，并完成截至本阶段五个 Harness 的对照。
 
 ## 课程
 
@@ -44,7 +44,7 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 | [第 7 课：Daemon、Worker、重连与崩溃恢复](07-daemon-worker-recovery.md) | State | 客户端断开、Supervisor 替换或 Worker 崩溃后，哪些状态可以恢复？ |
 | [第 8 课：Goal、Autonomous、Heartbeat 与 Schedule](08-long-running-continuation-policies.md) | Loop / State | 无用户新输入时，Harness 根据什么继续、停止或稍后重新进入 Session？ |
 | [第 9 课：Skills、MCP、Extensions 与信任边界](09-skills-mcp-extensions-safety.md) | Extension / Safety | 应怎样选择扩展面，并避免把进程边界误当成安全边界？ |
-| [第 10 课：长任务端到端复盘与五项目对照](10-end-to-end-review.md) | 全局 | 一次可递归、可恢复、可改进的长任务怎样贯穿六个维度？ |
+| [第 10 课：长任务端到端复盘与阶段性五项目对照](10-end-to-end-review.md) | 全局 | 一次可递归、可恢复、可改进的长任务怎样贯穿六个维度？ |
 
 ## 固定证据版本
 
@@ -124,4 +124,4 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 
 ## 阶段结论
 
-第五阶段教材已经完成，但个人掌握仍需要真实 CLI 运行、独立复述和安全环境中的长任务实验。最终对照见[Agent Harness 横向对照](../comparison.md)。
+第五阶段教材已经完成，但个人掌握仍需要真实 CLI 运行、独立复述和安全环境中的长任务实验。本阶段的结论已汇入持续更新的[Agent Harness 横向对照](../comparison.md)。
