@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](07-session-transcript-resume-fork-rewind.md) · [官方 Permission Modes](https://code.claude.com/docs/en/permission-modes) · [官方 Sandboxing](https://code.claude.com/docs/en/sandboxing) · [课程实验](../examples/04-claude-code/08-safety-layers/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.260 修复含括号路径 permission rules 和 zsh 特殊赋值中的 command substitution 判断；2.1.261 增加组织策略加载诊断并修复 Remote Control 的陈旧权限显示。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Claude Code 的 allow / deny / ask、Permission mode、Hook、Bash 语义检查和 OS Sandbox 分别控制什么？它与第三阶段 Codex 的默认安全架构有什么区别？

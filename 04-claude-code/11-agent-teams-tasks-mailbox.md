@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](10-subagent-lifecycle-context-isolation.md) · [官方 Agent Teams 文档](https://code.claude.com/docs/en/agent-teams) · [课程实验](../examples/04-claude-code/11-team-coordination/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 修复远程 permission mode 的陈旧显示。此次没有新还原源码支持修改 Teams 内部协议结论，需继续区分公开功能与历史 feature-gated 实现。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Agent Team 相比多个 Subagent 多了什么？任务所有权、依赖、消息、空闲状态和权限请求怎样在多个独立 Agent 之间同步？

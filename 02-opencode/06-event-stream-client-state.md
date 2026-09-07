@@ -2,6 +2,12 @@
 
 [上一课](05-model-provider-context-compaction.md) · [返回本阶段目录](README.md) · [Pi Mono 事件流对照](../01-pi-mono/05-event-driven-agent-state.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+TUI hydration 先按 `time.created`、ID 排序，再保留最近 100 条；删除按 ID 查找。消息 ID 不是时间顺序，排序修复也没有让 global SSE 获得 replay cursor。
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 OpenCode 怎样把 Server 内发生的 Session 变化送到客户端，并让 TUI 在历史快照、实时增量、断线重连和并发更新之间维持可用状态？

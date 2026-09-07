@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [OpenCode 对照](../02-opencode/07-coding-task-end-to-end-review.md) · [官方安全文档](https://developers.openai.com/codex/security)
 
+## 当前版本阅读提示（2026-09-07）
+
+`on-failure` 已作为兼容别名映射到 `OnRequest`，不是独立升级策略；`UnlessTrusted` 保留内部协议用途。动作前自动审批与异步行为监控是两层不同机制。
+
+本阶段当前源码为 `5ecb3af`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `757c151` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Sandbox、Approval 和模型决策分别控制什么？为什么 Permission policy 仍不能代替操作系统强制执行？

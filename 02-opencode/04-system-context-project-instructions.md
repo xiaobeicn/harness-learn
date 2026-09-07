@@ -2,6 +2,12 @@
 
 [上一课](03-tool-permission-execution-loop.md) · [返回本阶段目录](README.md) · [Pi Mono Context 对照](../01-pi-mono/04-transcript-and-model-context.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+Session 移动和 Revert committed 的 projector 不再直接 reset Context Epoch；移动后的 Context 观察与 baseline 处理应单独追踪。新的 V2 → V1 配置转换也不代表所有 V2 instructions/plugin 能力已接入 V1。
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 OpenCode 每次调用模型时，Agent system prompt、工作目录、日期、`AGENTS.md`、Skills 和项目 References 从哪里来？这些信息变化后，为什么不能直接静默替换旧 system prompt？
@@ -110,7 +116,7 @@ system: [agent.info?.system, system.baseline]
 
 ## Registry 提供稳定且可扩展的来源目录
 
-[`SystemContextRegistry`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/system-context/registry.ts#L1-L65) 是 Location-scoped：
+[`SystemContextRegistry`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/system-context/registry.ts) 是 Location-scoped：
 
 - entry 通过 Scope 注册和移除。
 - entry key 会排序，保证 baseline 顺序稳定。
@@ -128,7 +134,7 @@ Registry sources
 
 ## Built-ins：环境与日期
 
-[`system-context/builtins.ts`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/system-context/builtins.ts#L1-L51) 注册两个基本来源。
+[`system-context/builtins.ts`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/system-context/builtins.ts) 注册两个基本来源。
 
 ### `core/environment`
 
@@ -147,7 +153,7 @@ Registry sources
 
 ## `AGENTS.md` 如何进入 System Context
 
-[`InstructionContext`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/instruction-context.ts#L1-L105) 注册 `core/instructions` source。
+[`InstructionContext`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/instruction-context.ts) 注册 `core/instructions` source。
 
 V2 当前发现顺序：
 

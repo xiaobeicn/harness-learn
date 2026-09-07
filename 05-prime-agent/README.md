@@ -4,10 +4,10 @@
 
 阶段状态：**教材已完成（10 / 10 课）；个人掌握清单待学习者验证**
 
-本阶段研究 Prime Agent 怎样把 Coding Agent 重组为一个以持久 IPython 为模型控制面、能够递归委派并持续改进补充 Harness 状态的长任务系统：
+本阶段研究 Prime Agent 怎样把 Coding Agent 重组为一个以持久 Python REPL 为模型控制面、能够递归委派并持续改进补充 Harness 状态的长任务系统：
 
 ```text
-RLM / IPython
+RLM / CPython REPL
   → typed host bridge
   → AgentSession / child sessions
   → daemon-backed continuity
@@ -20,9 +20,9 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 
 以下勾选表示学习者能够独立完成，不等同于对应文档已经写完。
 
-- [ ] 画出 TUI → AgentConnection → Supervisor → Worker → AgentSession → IPython 的完整边界。
+- [ ] 画出 TUI → AgentConnection → Supervisor → Worker → AgentSession → CPython REPL 的完整边界。
 - [ ] 解释为什么默认只有一个 `ipython` 模型工具，文件、Shell、Skill 和 MCP 能力怎样在其中组合。
-- [ ] 追踪一次 `await rlm(...)` 从 Jupyter comm 到子 `AgentSession` 的接纳与运行。
+- [ ] 追踪一次 `await rlm(...)` 从 JSONL host_request 到子 `AgentSession` 的接纳与运行。
 - [ ] 区分子 Agent 的 admission handle、完成结果、消息回传和 usage attribution。
 - [ ] 解释 JSONL Session tree、Compaction boundary 与 Kernel snapshot 分别保存什么。
 - [ ] 区分 RLM runtime、Continual Harness、已安装 Skill 与 Harness skill entry。
@@ -37,7 +37,7 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 | --- | --- | --- |
 | [第 1 课：来源边界、Pi 血缘与总体架构](01-source-boundary-and-architecture.md) | 全局 | Prime Agent 在 Pi Runtime 之上增加了哪些进程和状态边界？ |
 | [第 2 课：单工具 RLM Loop 与 Context 构建](02-single-tool-rlm-loop-and-context.md) | Loop / Context | 为什么一个持久 `ipython` 工具足以成为模型的程序化控制面？ |
-| [第 3 课：IPython Kernel、Jupyter 通道与 Host Bridge](03-ipython-kernel-and-host-bridge.md) | Tools / Safety | Python 怎样调用 Host 权威操作，为什么回复必须走 control channel？ |
+| [第 3 课：Python REPL、内核协议迁移与 Host Bridge](03-ipython-kernel-and-host-bridge.md) | Tools / Safety | Python 怎样调用 Host 权威操作，为什么 host_reply 必须能旁路普通请求队列？ |
 | [第 4 课：递归子 Agent、Registry 与消息回传](04-recursive-subagents-and-messaging.md) | Multi-Agent | `rlm()` 为什么只返回接纳句柄，子 Agent 怎样运行、恢复和回传结果？ |
 | [第 5 课：Session Tree、Compaction 与 Kernel 连续性](05-session-tree-compaction-kernel-state.md) | Context / State | Transcript、模型 Context、摘要和 Python namespace 怎样分别保存？ |
 | [第 6 课：Continual Harness、Refinement 与回滚](06-continual-harness-refinement.md) | Context / State / Extension | Harness 怎样从轨迹中形成小而可审计的补充状态更新？ |
@@ -46,7 +46,24 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 | [第 9 课：Skills、MCP、Extensions 与信任边界](09-skills-mcp-extensions-safety.md) | Extension / Safety | 应怎样选择扩展面，并避免把进程边界误当成安全边界？ |
 | [第 10 课：长任务端到端复盘与阶段性五项目对照](10-end-to-end-review.md) | 全局 | 一次可递归、可恢复、可改进的长任务怎样贯穿六个维度？ |
 
-## 固定证据版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent) |
+| 当前 commit | [`b9cf467`](https://github.com/PrimeIntellect-ai/prime-agent/tree/b9cf467edf8bbbd8e607991cf770407d62daa8ec) |
+| 完整 commit | `b9cf467edf8bbbd8e607991cf770407d62daa8ec` |
+| Commit 时间 | `2026-09-07T02:15:35-04:00` |
+| 跟踪分支 | `main` |
+| 版本标识 | 0.9.3；Python runtime 0.1.0 |
+| 本地目录 | `sources/prime-agent`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定证据版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -63,13 +80,15 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
 
 固定 commit 是为了让目录、协议版本和调用链可复现。Prime Agent 迭代很快，升级源码后必须重新核对默认工具、Daemon schema、Session 语义和实验结论。
 
+</details>
+
 ## 证据边界
 
 - `源码`：官方 MIT 仓库固定 commit 中的实现。
 - `文档`：同一 commit 随仓库发布的官方 README 与 `packages/coding-agent/docs/`。
 - `实验`：本阶段提交的独立、无外部依赖最小模型。
 - `未验证`：本地没有安装上游 workspace 依赖，也没有配置模型凭据，因此没有运行真实 Prime Agent、上游测试或付费模型调用。
-- `限制`：固定版本的 `daemon.md` 仍写“protocol v4”，而 [`daemon-protocol.ts`](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/src/modes/daemon/daemon-protocol.ts#L47-L63) 已定义 v7 / schema revision 15。本阶段涉及实现版本时以固定源码为准，并保留这条文档滞后记录。
+- `限制`：当前 `daemon.md` 仍写“protocol v4”，而 [`daemon-protocol.ts`](https://github.com/PrimeIntellect-ai/prime-agent/blob/b9cf467edf8bbbd8e607991cf770407d62daa8ec/packages/coding-agent/src/modes/daemon/daemon-protocol.ts) 已定义 v7 / schema revision 27。本阶段涉及实现版本时以固定源码为准，并保留这条文档滞后记录。
 
 ## 十课形成的一条主线
 
@@ -79,7 +98,7 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
   → Session input queue
   → Agent loop 构造 Context
   → 模型只调用 ipython
-  → Kernel 执行 Python / %%bash / Skill
+  → CPython REPL 执行 Python / bash() / Skill
   → typed host request 返回 AgentSession
   → child、goal、message、compact 或 refine 状态变化
   → ToolResult / custom message 回灌
@@ -87,7 +106,7 @@ Prime Agent 建立在 Pi 系列包的 Agent loop、消息和 TUI 基础上。本
   → continuation、detach、resume 或 stop
 ```
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01–03：架构、Loop 与 Kernel
 

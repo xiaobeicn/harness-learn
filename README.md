@@ -20,6 +20,7 @@ Pi Mono
 
 | 内容 | 入口 |
 | --- | --- |
+| 来源版本与本次更新 | [source-updates.md](source-updates.md) |
 | 总体路线与学习方法 | [00-roadmap.md](00-roadmap.md) |
 | 第一阶段：Pi Mono | [01-pi-mono/README.md](01-pi-mono/README.md) |
 | 第二阶段：OpenCode | [02-opencode/README.md](02-opencode/README.md) |
@@ -45,4 +46,4 @@ Pi Mono
 - `限制`：已经确认的适用边界或平台差异。
 - `未验证` / `推测`：证据仍不足，不能当作已验证结论。
 
-本地固定版本的上游源码统一放在 `sources/`。
+本地固定版本的上游源码统一放在 `sources/`。当前核验日期为 **2026-09-07**，版本、变更范围和复现方式见[来源更新记录](source-updates.md)，完整提交保存在 [source-versions.json](source-versions.json)。

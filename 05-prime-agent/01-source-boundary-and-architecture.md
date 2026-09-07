@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [官方 Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/architecture.md) · [课程实验](../examples/05-prime-agent/01-architecture-map/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+当前仍是持久 Python 控制面，但底层改为 CPython REPL + JSONL stdio；Daemon 增加 control/session plane 分类与直连 Worker 能力。下文 IPython/Jupyter 拓扑只保留为历史对照。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Prime Agent 在 Pi 的 Agent Runtime 之上增加了哪些产品、进程和状态边界？研究时怎样区分官方实现、官方说明与尚未运行的行为？

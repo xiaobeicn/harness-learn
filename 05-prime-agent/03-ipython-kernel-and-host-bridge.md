@@ -1,6 +1,12 @@
-# 第 3 课：IPython Kernel、Jupyter 通道与 Host Bridge
+# 第 3 课：Python REPL、内核协议迁移与 Host Bridge
 
 [返回本阶段目录](README.md) · [上一课](02-single-tool-rlm-loop-and-context.md) · [官方 RLM Runtime Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/rlm-runtime.md) · [课程实验](../examples/05-prime-agent/03-host-bridge/index.mjs)
+
+## 当前版本阅读提示（2026-09-07）
+
+新协议由 `python -m rlm.repl` 启动并以 `ready` 宣告 protocol 3；普通请求串行，`host_reply`/`interrupt` 旁路处理。协议帧与用户 stdout/stderr 隔离，无法证明 cell 归属的输出标为 null。下面 Jupyter control/iopub 机制是旧实现。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
 
 ## 核心问题
 

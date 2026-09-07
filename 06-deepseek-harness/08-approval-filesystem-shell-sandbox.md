@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](07-compaction-pruning-context-overflow.md) · [Sandbox 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/sandbox.md) · [Approval 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/approval.md) · [课程实验](../examples/06-deepseek-harness/08-safety-decision/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+新增跨进程 Session writer lease 解决写入所有权，不能代替 OS Sandbox。实验 CPython runtime 的进程与资源上限也不是安全边界；checkpoint 失败时模型请求或工具副作用必须停止。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 用户允许一次操作、路径位于 workspace、命令经过 Sandbox runner，这三件事分别证明什么？哪一层才限制不可信子进程？

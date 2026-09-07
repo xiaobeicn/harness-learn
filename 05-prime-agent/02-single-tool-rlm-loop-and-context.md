@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](01-source-boundary-and-architecture.md) · [官方 RLM Programming Model](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/rlm.md) · [课程实验](../examples/05-prime-agent/02-rlm-loop/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+模型工具名仍为 `ipython`，执行器已是 CPython REPL。`%%bash`、`%cd`、`%env`、`!cmd` 会报 SyntaxError，改用 `await bash(...)`、`os.chdir`、`os.environ`。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 为什么 Prime Agent 默认只向模型暴露一个 `ipython` 工具？这个程序化控制面怎样仍然形成标准的 model → tool → result → model 循环？

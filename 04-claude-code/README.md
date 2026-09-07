@@ -46,7 +46,24 @@ Loop → Context → Tools → State → Safety → Extension
 | [第 11 课：Agent Teams、Tasks、Mailbox 与权限同步](11-agent-teams-tasks-mailbox.md) | Multi-Agent | 多 Agent 怎样管理 ownership、依赖、通信与授权？ |
 | [第 12 课：Plugin、MCP、Hooks、Skills 扩展与端到端复盘](12-extension-system-end-to-end-review.md) | Extension / 全局 | 如何选择扩展并用六维框架复盘完整任务？ |
 
-## 固定证据版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [pengchengneo/Claude-Code](https://github.com/pengchengneo/Claude-Code) |
+| 当前 commit | [`b78dd22`](https://github.com/pengchengneo/Claude-Code/tree/b78dd22a091b717c8938ab98c736bc04825a8ee8) |
+| 完整 commit | `b78dd22a091b717c8938ab98c736bc04825a8ee8` |
+| Commit 时间 | `2026-04-01T12:32:11+08:00` |
+| 跟踪分支 | `main` |
+| 版本标识 | 还原快照未更新；官方公开变更记录 2.1.263 |
+| 本地目录 | `sources/claude-code`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定证据版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -57,6 +74,8 @@ Loop → Context → Tools → State → Safety → Extension
 | 文件规模 | 1,987 个 TS / TSX 文件，约 44 MB |
 | 官方公开契约 | [Claude Code 官方文档](https://code.claude.com/docs/en/overview) |
 | 官方文档目录核验 | `claude_code_docs_map.md`，2026-08-05 更新 |
+
+</details>
 
 ## 来源限制
 
@@ -84,7 +103,7 @@ Loop → Context → Tools → State → Safety → Extension
   → 下一轮、Compaction、Subagent、Team 或结束
 ```
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01–02：来源与 Loop
 

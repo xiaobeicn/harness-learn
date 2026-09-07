@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [官方 Architecture](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/architecture.md) · [Cordis Primer](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/cordis-primer.md) · [课程实验](../examples/06-deepseek-harness/01-capability-map/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+当前 0.1.3-alpha.1 使用 Session format 2、handle-based persistence 和静态格式迁移。Cordis 组合主线继续成立，但旧日志 schema 与 raw-chunk durable 结论需要更新。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 为什么说 DeepSeek Harness 的基本架构单位是 capability seam，而不只是一个持有模型和工具的 `Agent` class？

@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](03-system-prompt-claudemd-project-instructions.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [官方 Skills 文档](https://code.claude.com/docs/en/skills) · [课程实验](../examples/04-claude-code/04-context-admission/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 新增 `/skill-doctor` 观察已加载 Skill 的使用与 Context 成本；2.1.260 增加 prompt-cache miss 原因诊断。不能由此倒推旧 source-map 中的实现。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一个 Harness 为什么不能把所有可能有用的信息都塞进启动 Prompt？Claude Code 如何通过描述、attachment 和按需加载控制 Context 成本？

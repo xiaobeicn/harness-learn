@@ -2,6 +2,12 @@
 
 [上一课](03-build-minimal-agent-runtime.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/04-context-boundary/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+Context 仍经过 `transformContext → convertToLlm`，但替换下一轮 Context 的 prepare hook 只在实际 continuation 前发生；最终清理放到 `agent_end`。压缩期间到达的 steering 会在准备后补取。
+
+本阶段当前源码为 `9767ba2`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `588915e` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 为什么 Agent 保存的完整会话记录，不一定等于这一次真正发送给模型的消息？

@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](05-filesystem-network-protected-paths.md) · [实验目录](../examples/03-codex-cli/06-escalation-lab/README.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+新增复盘场景：提权终端后续输入、远端路径解释和未知 profile 的拒绝。旧 `on-failure` 实验预期不可直接套用，新版按 `OnRequest` 语义处理；本轮未重新执行平台实验。
+
+本阶段当前源码为 `5ecb3af`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `757c151` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 怎样安全观察“边界内成功、越界失败、显式授权、受控重试与 never 拒绝”，并把第三阶段串成一条生产级执行链？

@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](09-subagent-jobs-goal-schedule-workflow.md) · [Extensions 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/extensions.md) · [Skills 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/skills.md) · [MCP Client](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/mcp/mcp-client/README.md) · [课程实验](../examples/06-deepseek-harness/10-extension-routing/index.mjs) · [六项目横向对照](../comparison.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+PTC 与私有实验 CPython backend 扩展了程序化调用；每次 run 使用新进程，不能等同 Prime Agent 的持久 namespace。MCP 可按模型能力投影图片，仍只桥接 Tools；实验 Python backend 未进入默认 profiles。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 同一个“扩展能力”可以写成 Cordis plugin、Skill、MCP server、兼容 Hook 或动态 Cordis package。怎样按能力、生命周期与信任面选择，而不是只看接入是否方便？

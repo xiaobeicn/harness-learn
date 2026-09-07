@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](06-tool-contract-registry-execution.md) · [官方 Sessions 文档](https://code.claude.com/docs/en/sessions) · [课程实验](../examples/04-claude-code/07-session-dag/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 修复恢复并行工具历史时遗漏 hook context；下文仍为旧还原源码的 Session 实现分析，不能称为当前产品实现验证。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Claude Code 怎样把长对话存成可恢复状态？为什么 append-only JSONL 加 `parentUuid` 可以同时支持继续、分支、回退和 compact boundary？

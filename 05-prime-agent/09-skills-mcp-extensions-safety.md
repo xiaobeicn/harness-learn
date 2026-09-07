@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](08-long-running-continuation-policies.md) · [官方 Skills](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/skills.md) · [官方 MCP Integrations](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/mcp-integrations.md) · [课程实验](../examples/05-prime-agent/09-extension-routing/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+generic MCP 支持 Streamable HTTP 与 stdio，预导入 `mcp` 并由 kernel 管连接；仅用户 settings 用于执行，项目配置不能静默启动本地 server。旧 remote-HTTP-only 限制只适用于特定 wrapper。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 应该在什么时候选择 Markdown Skill、Python-backed Skill、MCP integration、TypeScript Extension 或 Continual Harness entry？这些机制中的“可拦截”能否提供系统级安全保证？

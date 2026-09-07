@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](11-agent-teams-tasks-mailbox.md) · [官方 Features 总览](https://code.claude.com/docs/en/features-overview) · [课程实验](../examples/04-claude-code/12-extension-routing/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方新增 `/skill-doctor`、headless `/reload-plugins` 和 `/advisor` 文本入口；公开 changelog 已固定到 2.1.263 所在 commit，内部分析仍固定 b78dd22。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 面对“给 Claude Code 增加能力”的需求，什么时候用 CLAUDE.md、Skill、Custom Agent、Hook、MCP 或 Plugin？怎样用六维框架复盘一次完整 Coding Task？

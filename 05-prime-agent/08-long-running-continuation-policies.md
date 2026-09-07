@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](07-daemon-worker-recovery.md) · [官方 Long-Running Agents](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/long-running-agents.md) · [课程实验](../examples/05-prime-agent/08-long-running-policy/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+Goal continuation 会等待未 settle 的子 Agent，自动 compaction 后保持 continuation；Heartbeat session 正常显示 idle，通过 durable wake 再进入，不以虚假的 busy 状态维持驻留。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一次普通 assistant turn 结束后，Harness 根据什么立即继续、等待下个时间点，或真正停止？谁可以创建和完成这些长期状态？

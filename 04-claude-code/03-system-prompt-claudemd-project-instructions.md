@@ -2,6 +2,10 @@
 
 [返回本阶段目录](README.md) · [上一课](02-input-admission-and-agent-loop.md) · [官方 Memory 文档](https://code.claude.com/docs/en/memory) · [课程实验](../examples/04-claude-code/03-instruction-precedence/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Claude Code 怎样区分产品级 System prompt、运行环境、用户 / 项目指令和 Memory？访问嵌套目录时，为什么 Context 还能继续增长？

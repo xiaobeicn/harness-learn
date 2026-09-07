@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [Pi Mono 对照](../01-pi-mono/07-phase-review.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+新增 V2 → V1 配置适配器，但它只转换可表示字段并报告省略项；V1 产品路径与 V2 durable Session 仍需分别追踪。
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Pi Mono 的最小 Runtime 怎样成长为一个同时支持 CLI、TUI、桌面端、Web 和远程 Server 的 Coding Agent 产品？

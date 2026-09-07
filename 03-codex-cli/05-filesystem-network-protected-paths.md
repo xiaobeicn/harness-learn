@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](04-platform-sandbox-backends.md) · [下一课](06-escalation-experiment-phase-review.md) · [官方 Permissions 文档](https://developers.openai.com/codex/permissions)
 
+## 当前版本阅读提示（2026-09-07）
+
+权限路径需要使用实际执行器的 cwd/home，远程 resume/fork 保留原 profile。网络授权和启用 command proxy 是两个开关，域名规则也不覆盖 MCP/浏览器等独立连接。
+
+本阶段当前源码为 `5ecb3af`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `757c151` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 writable roots、deny-read、`.git` 等 protected metadata 与 managed network，怎样共同决定命令能接触的资源？

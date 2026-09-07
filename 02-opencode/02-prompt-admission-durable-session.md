@@ -2,6 +2,10 @@
 
 [上一课](01-runtime-to-product-boundaries.md) · [返回本阶段目录](README.md) · [Pi Mono 运行控制对照](../01-pi-mono/06-abort-steering-follow-up.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 用户按下回车后，OpenCode 为什么不直接把 prompt 塞给模型，而要先把它可靠接纳到 Session，再单独唤醒执行器？
@@ -141,7 +145,7 @@ Runner 到达安全边界后才发布 `Prompted`，设置 `promoted_seq`，并�
 | `steer` | 在下一个 provider-turn 安全边界，将截止序列前待处理的 steers 按 FIFO 一批推进。 | 尽快修正当前任务方向。 |
 | `queue` | 当前 Session 本来要空闲时，只推进最旧的一条 queue；处理后再重新判断。 | 等当前任务稳定结束后再做下一件事。 |
 
-实现位于 [`promoteSteers()` 与 `promoteNextQueued()`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/session/input.ts#L245-L289)。
+实现位于 [`promoteSteers()` 与 `promoteNextQueued()`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/session/input.ts)。
 
 它们与 Pi Mono 的 Steering / Follow-up 很相似，但不要直接画等号：OpenCode 的输入先进入 durable inbox，并由 serialized Session runner promotion；Pi Mono 第一阶段看到的是 Runtime 内存队列。
 
@@ -177,7 +181,7 @@ execution.wake() 不发生
 
 ## Wake 不是另起一个并行 Agent
 
-[`SessionRunCoordinator`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/session/run-coordinator.ts#L1-L112) 以 Session ID 为 key：
+[`SessionRunCoordinator`](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/session/run-coordinator.ts) 以 Session ID 为 key：
 
 - 同一个 Session 只允许一个 active drain，执行保持串行。
 - active 时重复 `wake()` 只设置 `pendingWake`，多个通知可以合并。

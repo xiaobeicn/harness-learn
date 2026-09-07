@@ -2,6 +2,12 @@
 
 [上一课](01-agent-runtime-mental-model.md) · [返回本阶段目录](README.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+`prepareNextTurn` 现在只在确认继续后、下一次 `turn_start` 前调用，`shouldStopAfterTurn` 先执行；终止轮不调用准备钩子。blocked tool 的 `terminate` 参与整批终止规则，不能用单个拒绝推出全局结束。
+
+本阶段当前源码为 `9767ba2`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `588915e` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一次 `Agent.prompt()` 如何经过模型调用、工具执行和结果回填，最终生成回答？

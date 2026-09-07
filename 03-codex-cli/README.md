@@ -25,7 +25,24 @@
 | [第 5 课：文件系统、网络与受保护路径](05-filesystem-network-protected-paths.md) | 已完成 | writable roots、网络隔离和 `.git` 等 carve-out 如何执行？ |
 | [第 6 课：权限提升实验与阶段复盘](06-escalation-experiment-phase-review.md) | 已完成 | 一次越界操作怎样失败、申请授权并以受控方式重试？ |
 
-## 固定源码版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [openai/codex](https://github.com/openai/codex) |
+| 当前 commit | [`5ecb3af`](https://github.com/openai/codex/tree/5ecb3afd1bf405149e2159bfda50093b0c1b5fab) |
+| 完整 commit | `5ecb3afd1bf405149e2159bfda50093b0c1b5fab` |
+| Commit 时间 | `2026-09-07T06:43:23Z` |
+| 跟踪分支 | `main` |
+| 版本标识 | 开发分支，以 commit 固定 |
+| 本地目录 | `sources/codex`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定源码版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -40,6 +57,8 @@
 | 默认分支 | `main` |
 
 仓库 main 分支使用开发占位版本号，因此本阶段以 commit 而不是 package version 作为可复现边界。升级 commit 后，必须重新验证策略类型、默认值、执行顺序和平台实现。
+
+</details>
 
 ## 本阶段阅读策略
 
@@ -58,7 +77,7 @@
 
 源码正在从旧的 `sandbox_mode` / `SandboxPolicy` 接口迁移到更细粒度的 `PermissionProfile`。课程会明确区分兼容层、当前 canonical representation 与真正的 OS enforcement，不把同名类型当成同一层。
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01：Sandbox、Approval 与威胁模型（2026-08-05）
 

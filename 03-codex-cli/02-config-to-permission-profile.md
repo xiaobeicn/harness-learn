@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](01-sandbox-approval-threat-model.md) · [官方配置文档](https://developers.openai.com/codex/config-basic)
 
+## 当前版本阅读提示（2026-09-07）
+
+当前 `AskForApproval` 含内部 `UnlessTrusted`、`OnRequest`、`Granular`、`Never`。Granular 控制是否允许发起各类审批，不直接授予权限。Profile 的 catalog/selection/resolution 已拆成独立入口。
+
+本阶段当前源码为 `5ecb3af`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `757c151` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 CLI 参数、用户配置、项目配置与管理员约束，怎样收敛成一次 turn 真正执行的权限？

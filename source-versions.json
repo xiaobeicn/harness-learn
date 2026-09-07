@@ -1,0 +1,78 @@
+{
+  "checked_at": "2026-09-07",
+  "selection": "upstream branch HEAD at fetch time; not latest stable release",
+  "sources": [
+    {
+      "name": "pi-mono",
+      "repository": "https://github.com/badlogic/pi-mono.git",
+      "branch": "main",
+      "commit": "9767ba275f3e9a5ee0f5c5342249b629ab1b2282",
+      "commit_date": "2026-09-06T00:30:17+02:00",
+      "previous_commit": "588915ec71714688cee8b7153339e8bdebb3e82e",
+      "version": "pi-agent-core 0.85.1",
+      "path": "sources/pi-mono",
+      "evidence": "official source"
+    },
+    {
+      "name": "opencode",
+      "repository": "https://github.com/anomalyco/opencode.git",
+      "branch": "dev",
+      "commit": "57ef3828431790c53f8f333c7ffbfe88770a1812",
+      "commit_date": "2026-09-07T01:11:00-05:00",
+      "previous_commit": "2f17fc9613771af3de3b5a2715b836037d80c4b1",
+      "version": "opencode 1.18.29",
+      "path": "sources/opencode",
+      "evidence": "official source"
+    },
+    {
+      "name": "codex",
+      "repository": "https://github.com/openai/codex.git",
+      "branch": "main",
+      "commit": "5ecb3afd1bf405149e2159bfda50093b0c1b5fab",
+      "commit_date": "2026-09-07T06:43:23Z",
+      "previous_commit": "757c151a0e920c6238801866a3d13e010dfeddb8",
+      "version": "开发分支，以 commit 固定",
+      "path": "sources/codex",
+      "evidence": "official source"
+    },
+    {
+      "name": "claude-code",
+      "repository": "https://github.com/pengchengneo/Claude-Code.git",
+      "branch": "main",
+      "commit": "b78dd22a091b717c8938ab98c736bc04825a8ee8",
+      "commit_date": "2026-04-01T12:32:11+08:00",
+      "previous_commit": "b78dd22a091b717c8938ab98c736bc04825a8ee8",
+      "version": "还原快照未更新；官方公开变更记录 2.1.263",
+      "path": "sources/claude-code",
+      "evidence": "unofficial source-map reconstruction"
+    },
+    {
+      "name": "prime-agent",
+      "repository": "https://github.com/PrimeIntellect-ai/prime-agent.git",
+      "branch": "main",
+      "commit": "b9cf467edf8bbbd8e607991cf770407d62daa8ec",
+      "commit_date": "2026-09-07T02:15:35-04:00",
+      "previous_commit": "71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8",
+      "version": "0.9.3；Python runtime 0.1.0",
+      "path": "sources/prime-agent",
+      "evidence": "official source"
+    },
+    {
+      "name": "deepseek-harness",
+      "repository": "https://github.com/deepseek-ai/deepseek-harness.git",
+      "branch": "master",
+      "commit": "d347e703908d0406b7a7ef80e3a0e594d86b2215",
+      "commit_date": "2026-09-04T17:16:23+08:00",
+      "previous_commit": "47f943859bef60e4160492346772ded9b24f765a",
+      "version": "0.1.3-alpha.1",
+      "path": "sources/deepseek-harness",
+      "evidence": "official source"
+    }
+  ],
+  "claude_code_public_changelog": {
+    "repository": "https://github.com/anthropics/claude-code.git",
+    "commit": "ab9b2cf7bb9e4f98ff264c07a22e46d83c29c558",
+    "version": "2.1.263",
+    "checked": "2026-09-07"
+  }
+}

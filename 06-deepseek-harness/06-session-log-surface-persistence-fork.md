@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](05-tool-registry-policy-ordered-concurrency.md) · [Session 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/session.md) · [Persistence 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/persistence.md) · [课程实验](../examples/06-deepseek-harness/06-session-surface/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+Session format 已为 2；v0/v1 经静态相邻迁移链读取并保留历史代。Persistence 使用读/写 handle、默认 Zstd、fsync batch、跨进程 writer lease；assistant 实时帧在结算前不保证持久化。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 为什么完整 Session 日志不能直接等同于下一次发给模型的 messages？异步落盘、崩溃恢复与 Fork 各自保持什么不变量？

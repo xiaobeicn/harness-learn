@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](08-approval-filesystem-shell-sandbox.md) · [Subagent 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/subagent.md) · [Jobs 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/jobs.md) · [课程实验](../examples/06-deepseek-harness/09-durable-continuation/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+相邻 Agent 统一 steer：running 在最近 Step boundary claim，idle 唤醒，cold 先恢复；interrupt 保留未 claim 队列与 Activation，已 claim 消息不自动重排。另有实验 Teams 与子模型选择/授权。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 DeepSeek Harness 怎样在不膨胀核心 Loop 的情况下加入多 Agent 与长期运行？为什么 child Session durable，不代表 child process 永远常驻？

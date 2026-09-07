@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](03-inbox-turn-step-agent-loop.md) · [System Prompt 源码](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/core/system-prompt/src/index.ts) · [Runtime Context](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/core/agent-loop/src/runtime-context.ts) · [课程实验](../examples/06-deepseek-harness/04-context-snapshot/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+同 order 的 Prompt sections 按 code-unit name 确定排序。Session v2 把 compact timed stream 嵌入 assistant/message 或 assistant/attempt，取代逐 chunk durable event；硬崩溃可丢失未结算实时流。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 插件可以动态改变 Prompt、Context 和工具目录。DeepSeek Harness 怎样保证模型实际看到的请求可以审计和稳定重放？

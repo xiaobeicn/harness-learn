@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](04-system-prompt-runtime-context-llm-streaming.md) · [Tools 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/tools.md) · [Tool Runtime](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/core/tools/src/index.ts) · [课程实验](../examples/06-deepseek-harness/05-ordered-tool-execution/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+工具模式 `code` 改名 `ptc`，通过 run_code 与 SDK 组合调用。semantic checkpoint policy 在顶层 tool body 前确认 durable intent，未知副作用恢复为 TOOL_OUTCOME_UNKNOWN，不自动重放。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 多个插件可以注册工具和策略。一次模型 tool call 怎样在动态组合下仍保持参数、授权、结果与 Session 顺序确定？

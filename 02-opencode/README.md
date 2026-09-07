@@ -27,7 +27,24 @@
 | [第 6 课：Event Stream 与客户端状态同步](06-event-stream-client-state.md) | 已完成 | durable events 怎样成为 TUI 可见的实时状态？ |
 | [第 7 课：完整 Coding Task 端到端追踪与阶段复盘](07-coding-task-end-to-end-review.md) | 已完成 | 一次任务怎样贯穿 prompt、模型、工具、权限、验证、历史与 UI？ |
 
-## 固定源码版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [anomalyco/opencode](https://github.com/anomalyco/opencode) |
+| 当前 commit | [`57ef382`](https://github.com/anomalyco/opencode/tree/57ef3828431790c53f8f333c7ffbfe88770a1812) |
+| 完整 commit | `57ef3828431790c53f8f333c7ffbfe88770a1812` |
+| Commit 时间 | `2026-09-07T01:11:00-05:00` |
+| 跟踪分支 | `dev` |
+| 版本标识 | opencode 1.18.29 |
+| 本地目录 | `sources/opencode`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定源码版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -41,6 +58,8 @@
 | 默认分支 | `dev` |
 
 固定 commit 是为了让目录、依赖关系和调用链可以复现。OpenCode 迭代很快，升级源码版本后必须重新验证课程结论。
+
+</details>
 
 ## 本阶段阅读策略
 
@@ -59,7 +78,7 @@ CLI / TUI
 
 每次只确认当前链条必需的文件。看到 `legacy`、V1 或 V2 路径时明确记录，不把迁移期的两套实现混成一个架构。
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01：产品与传输边界（2026-08-05）
 

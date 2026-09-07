@@ -2,6 +2,12 @@
 
 [上一课](06-abort-steering-follow-up.md) · [返回本阶段目录](README.md) · [横向对照](../comparison.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+最小 Runtime 之外已出现 durable operation、Lane、effect gate 与 repository 的进阶主线；storage format 4 仍未稳定，`watchSession`、search 与部分 fork 能力仍有未完成项。
+
+本阶段当前源码为 `9767ba2`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `588915e` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 阶段结论
 
 最小 Agent Runtime 不是“循环调用 LLM”这么简单。可以把它压缩成：

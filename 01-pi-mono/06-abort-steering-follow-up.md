@@ -2,6 +2,12 @@
 
 [上一课](05-event-driven-agent-state.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/06-run-control/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+并行工具完成 preflight 后、执行体开始前新增 abort 检查；准备期间的 steering 会被补取，但已有 pending 时不多取一条。`prepareNextTurn` 的新时机见本次补充。
+
+本阶段当前源码为 `9767ba2`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `588915e` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一个正在运行或即将结束的 Agent，如何被中断、修正方向，或继续处理排队消息？

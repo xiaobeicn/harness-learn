@@ -23,9 +23,9 @@ DeepSeek Harness 不是在已有 Runtime 外只增加一个产品壳，而是把
 - [ ] 画出 Boot → Profile → Bundle / Patch → Cordis Fiber → Service 的组合路径。
 - [ ] 解释 `inject`、typed event、Service 与 reversible effect 怎样支持热插拔。
 - [ ] 区分 durable Inbox 的 `next-turn` 与 `next-step`，并追踪 Turn / Step 生命周期。
-- [ ] 说明 System Prompt、Runtime Context snapshot、request header 与 raw stream 各保存什么。
+- [ ] 说明 System Prompt、Runtime Context snapshot、request header、实时 frames 与已结算 stream 各保存什么。
 - [ ] 复述 Tool policy waterfall、Approval、monotonic guard、ordered parallel commit 的顺序。
-- [ ] 区分 append-only Session log、Surface projection、write-behind persistence 与 fork lineage。
+- [ ] 区分 append-only Session log、Surface projection、persistence handle / checkpoint 与 fork lineage。
 - [ ] 解释 Tool-result pruning、model summary compaction 与 overflow retry 的推进条件。
 - [ ] 区分文件路径 containment、Shell OS runner、Approval 和 SandboxMode。
 - [ ] 说明 continuable Subagent 的 durable Session、process-local Activation 与 Inbox FIFO。
@@ -46,7 +46,24 @@ DeepSeek Harness 不是在已有 Runtime 外只增加一个产品壳，而是把
 | [第 9 课：Subagent、Jobs、Goal、Schedule 与 Workflow](09-subagent-jobs-goal-schedule-workflow.md) | Multi-Agent / State | 长任务能力怎样挂接核心 Loop，同时保持 durable ownership？ |
 | [第 10 课：Skills、MCP、Hooks、动态 Cordis 与六项目复盘](10-skills-mcp-hooks-dynamic-cordis-review.md) | Extension / 全局 | 多种扩展面如何按能力、生命周期和信任等级选择？ |
 
-## 固定证据版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) |
+| 当前 commit | [`d347e70`](https://github.com/deepseek-ai/deepseek-harness/tree/d347e703908d0406b7a7ef80e3a0e594d86b2215) |
+| 完整 commit | `d347e703908d0406b7a7ef80e3a0e594d86b2215` |
+| Commit 时间 | `2026-09-04T17:16:23+08:00` |
+| 跟踪分支 | `master` |
+| 版本标识 | 0.1.3-alpha.1 |
+| 本地目录 | `sources/deepseek-harness`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定证据版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -62,13 +79,15 @@ DeepSeek Harness 不是在已有 Runtime 外只增加一个产品壳，而是把
 
 固定 commit 是为了让插件清单、事件 schema、默认 Bundle 和平台策略可复现。官方将项目标为 developer preview，并明确可能发生 breaking changes；升级源码后必须重新核对 Session format、Profile 组合、工具与扩展契约。
 
+</details>
+
 ## 证据边界
 
 - `源码`：官方 MIT 仓库固定 commit 中的实现与测试。
 - `文档`：同一 commit 的 `docs/` 与 package README。
 - `实验`：本阶段提交的独立、无外部依赖最小语义模型。
 - `未验证`：本地没有安装上游 workspace 依赖、配置 Provider、启动 Web UI 或连接真实 MCP server，因此没有运行真实 DeepSeek Harness 与上游测试。
-- `限制`：课程示例验证设计不变量，不保证与预发布 API 二进制兼容；当前 Session format version 为 `0`，不支持的格式会被拒绝。
+- `限制`：课程示例验证设计不变量，不保证与预发布 API 二进制兼容；当前 Session format version 为 `2`，发布过的 v0/v1 经静态迁移链读取，未知格式拒绝。
 
 ## 十课形成的一条主线
 
@@ -78,14 +97,14 @@ Profile 选择 deployment composition
   → Prompt 进入 durable Inbox
   → Turn claim 与 Step request
   → Prompt / Runtime Context / Tool schemas 组装
-  → LLM chunks 与 request snapshot 追加到 Session
+  → request snapshot 入日志，LLM frames 实时发送后结算为 Session message/attempt
   → Tool policy / Approval / Sandbox / execution
   → ToolResult 形成下一 Step
   → Surface projection / Compaction / Persistence
   → Subagent、Goal、Schedule 或 Extension 继续改变能力
 ```
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01–03：组合、生命周期与 Loop
 

@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](09-skills-mcp-extensions-safety.md) · [官方 Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/architecture.md) · [课程实验](../examples/05-prime-agent/10-end-to-end/index.mjs) · [六项目横向对照](../comparison.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+当前端到端主线改为 ipython 工具 → CPython REPL/JSONL → typed Host request，配合 spawn ledger、direct worker transport、refine hook 与 generic MCP。进程隔离仍不是 OS Sandbox。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一次可递归、可断线恢复、可持续改进的长任务，怎样从输入进入 Session，经过单一 `ipython` 控制面，再形成可审计状态并安全地继续或停止？

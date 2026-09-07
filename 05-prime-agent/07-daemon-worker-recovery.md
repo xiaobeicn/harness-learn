@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](06-continual-harness-refinement.md) · [官方 Daemon Architecture](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/daemon.md) · [课程实验](../examples/05-prime-agent/07-daemon-recovery/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+Daemon 当前为 protocol 7 / schema 27；新 `direct_peer_transport` 允许会话数据直连 Worker，Supervisor 保留控制权威。上游 daemon.md 的 v4 标题仍滞后；REPL protocol 3 不属于 Daemon 协议。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 TUI 断开、Supervisor 被替换或 Session Worker 崩溃后，Prime Agent 能恢复哪些事实？为什么“补齐事件”和“重放副作用”必须采用不同策略？

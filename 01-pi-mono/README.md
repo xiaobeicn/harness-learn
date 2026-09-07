@@ -27,7 +27,24 @@
 | [第 6 课：Abort、Steering 与 Follow-up](06-abort-steering-follow-up.md) | 已完成 | 运行中的 Agent 如何接受控制和排队消息？ |
 | [第 7 课：第一阶段复盘](07-phase-review.md) | 已完成 | 能否独立画出并解释最小 Agent Runtime？ |
 
-## 固定源码版本
+## 当前源码版本（2026-09-07 核验）
+
+| 项目 | 值 |
+| --- | --- |
+| 来源 | [badlogic/pi-mono](https://github.com/badlogic/pi-mono) |
+| 当前 commit | [`9767ba2`](https://github.com/badlogic/pi-mono/tree/9767ba275f3e9a5ee0f5c5342249b629ab1b2282) |
+| 完整 commit | `9767ba275f3e9a5ee0f5c5342249b629ab1b2282` |
+| Commit 时间 | `2026-09-06T00:30:17+02:00` |
+| 跟踪分支 | `main` |
+| 版本标识 | pi-agent-core 0.85.1 |
+| 本地目录 | `sources/pi-mono`（根 `.gitignore` 忽略） |
+
+当前版本的行为修正、新能力与证据见[本次版本学习补充](source-update-2026-09-07.md)。旧课程正文及带行号的 permalink 保留初版 commit，受影响课程开头列出当前修正；不把旧源码链接或原实验结果自动迁移成新版证据。
+
+<details>
+<summary>初版版本与环境记录（历史证据）</summary>
+
+### 初版固定源码版本
 
 | 项目 | 值 |
 | --- | --- |
@@ -42,6 +59,8 @@
 
 固定 commit 是为了让文件路径和结论可以复现。更新源码版本时，需要重新检查课程中的调用链和行级行为。
 
+</details>
+
 ## 仓库边界
 
 | Package | 职责 | 本阶段是否深入 |
@@ -53,7 +72,7 @@
 
 ## 推荐阅读顺序
 
-以下路径已经按固定版本源码确认：
+以下入口保留初版 commit；当前调用链差异见本次版本学习补充：
 
 1. [项目根 README](https://github.com/badlogic/pi-mono/blob/588915ec71714688cee8b7153339e8bdebb3e82e/README.md)：确认 monorepo 的 package 边界。
 2. [Agent Core README](https://github.com/badlogic/pi-mono/blob/588915ec71714688cee8b7153339e8bdebb3e82e/packages/agent/README.md)：阅读最小示例、消息流和事件流。
@@ -64,7 +83,7 @@
 
 `packages/agent/src/harness/`、Context 压缩、Session 和 Coding Agent 暂不展开；它们不是理解最小循环的前置知识。
 
-## 学习记录
+## 初版学习记录（保留原日期与验证边界）
 
 ### 记录 01：路线初始化（2026-08-05）
 

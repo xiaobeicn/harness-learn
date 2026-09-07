@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](01-source-boundary-and-harness-map.md) · [官方工作原理](https://code.claude.com/docs/en/how-claude-code-works) · [课程实验](../examples/04-claude-code/02-agent-loop/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 修复 SDK/cloud 首条 prompt 接纳后、turn 启动前忽略 Stop 的窗口。属于官方发布说明，旧还原实现没有随之更新。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 用户输入进入 Claude Code 后，谁驱动“模型 → 工具 → 结果 → 模型”？一次模型调用、一次工具批次和一次 Agent turn 分别在哪里结束？

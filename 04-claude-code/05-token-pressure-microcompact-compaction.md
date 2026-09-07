@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](04-skills-attachments-dynamic-context.md) · [官方 Context 文档](https://code.claude.com/docs/en/context-window) · [课程实验](../examples/04-claude-code/05-compaction/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 新增命令与后台任务内联输出预算设置，最高 128K 字符。字符上限不等于 token 预算，提高上限会增加 Context 压力。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Context 接近上限时，Claude Code 先丢什么、后总结什么？Compaction 为什么不仅是“让模型写一段摘要”？

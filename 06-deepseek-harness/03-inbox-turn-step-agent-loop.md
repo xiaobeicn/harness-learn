@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](02-profile-bundle-patch-plugin-lifecycle.md) · [Agent Lifecycle](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/agent-lifecycle.md) · [Agent Loop 源码](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/core/agent-loop/src/agent.ts) · [课程实验](../examples/06-deepseek-harness/03-inbox-agent-loop/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+Inbox splice 仍进 Session log；agent/assistant-stream 是实时事件，结算后才写 assistant/message 或 assistant/attempt。相邻 Agent 的消息统一经 steer，interrupt 保留未 claim 队列。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一条输入在哪个边界变成 durable fact？`steer`、`inject` 与 `followup` 为什么不能都直接塞进当前模型请求？

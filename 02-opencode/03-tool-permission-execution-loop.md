@@ -2,6 +2,10 @@
 
 [上一课](02-prompt-admission-durable-session.md) · [返回本阶段目录](README.md) · [Pi Mono 工具循环对照](../01-pi-mono/02-prompt-tool-loop.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 模型产生一个 `tool-call` 后，OpenCode 如何把它变成经过校验、授权、执行、持久化并重新送回模型的宿主副作用？
@@ -175,7 +179,7 @@ action + resource pattern + effect
 2. 放入当前 Location 的 pending `Map`。
 3. 发布 `permission.v2.asked`，供 TUI、CLI 或其他 Client 展示。
 4. 当前工具 fiber 等待一个 `Deferred`。
-5. Client 通过 [permission reply API](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/protocol/src/groups/permission.ts#L119-L139) 回复。
+5. Client 通过 [permission reply API](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/protocol/src/groups/permission.ts) 回复。
 
 回复语义：
 
@@ -185,7 +189,7 @@ action + resource pattern + effect
 | `always` | 放行当前请求，并在有 `save` patterns 时保存项目级 allow。 |
 | `reject` | 拒绝当前请求，并拒绝同一 Session 的其他 pending permission requests。 |
 
-`always` 保存到 [`permission` SQL 表](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/permission/sql.ts#L1-L22)。但 pending requests 和等待它们的 `Deferred` 是当前进程内存状态；它们本身不是 durable execution ownership。
+`always` 保存到 [`permission` SQL 表](https://github.com/anomalyco/opencode/blob/2f17fc9613771af3de3b5a2715b836037d80c4b1/packages/core/src/permission/sql.ts)。但 pending requests 和等待它们的 `Deferred` 是当前进程内存状态；它们本身不是 durable execution ownership。
 
 ## 具体例子：`write` 的授权顺序
 

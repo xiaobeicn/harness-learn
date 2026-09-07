@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](05-token-pressure-microcompact-compaction.md) · [官方 Tools 说明](https://code.claude.com/docs/en/how-claude-code-works#tools) · [课程实验](../examples/04-claude-code/06-tool-executor/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 修复 resume 丢失并行工具周围 hook 输出及 Context。验证工具闭环时应比较恢复前后的模型请求，而不只核对可见结果文本。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 模型输出一个 `tool_use` 后，怎样经过工具发现、输入校验、Hook、Permission、执行和 result 标准化？为什么 Tool contract 不只是 JSON Schema？

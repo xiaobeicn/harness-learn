@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](05-session-tree-compaction-kernel-state.md) · [官方 RLM Runtime：Continual Harness](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/rlm-runtime.md#continual-harness-state) · [课程实验](../examples/05-prime-agent/06-continual-harness/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+新增 `session_before_refine`，可替换规划提案或跳过轮次；rollback 绕过该 hook，edits 仍接受 apply-time validation。Refinement 结果增加 durable transcript 与可展开 diff。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Agent 怎样从当前轨迹形成可复用状态，同时避免把一次性噪声、未经验证的猜测或整段聊天永久写入未来 Context？

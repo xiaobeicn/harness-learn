@@ -2,6 +2,12 @@
 
 [上一课](04-transcript-and-model-context.md) · [返回本阶段目录](README.md) · [运行代码](../examples/01-pi-mono/05-event-driven-state/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+当前 `Agent.reset()` 在 active run 存在时抛错，不能一边归约流式事件一边清空状态。下文独立示例用于说明归约机制，不替代这个上游生命周期约束。
+
+本阶段当前源码为 `9767ba2`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `588915e` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 低层 Agent loop 如何在不知道 CLI、TUI 或服务器实现的情况下，驱动一个可观察的有状态 Agent？

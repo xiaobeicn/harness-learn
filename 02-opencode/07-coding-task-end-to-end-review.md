@@ -2,6 +2,12 @@
 
 [上一课](06-event-stream-client-state.md) · [返回本阶段目录](README.md) · [横向对照](../comparison.md)
 
+## 当前版本阅读提示（2026-09-07）
+
+端到端追踪增加主请求/摘要请求的 session affinity 和 parent session header，并检查压缩边界完整条目与 TUI 时间排序；配置迁移不与 Session 执行迁移混为一谈。
+
+本阶段当前源码为 `57ef382`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `2f17fc9` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 阶段结论
 
 OpenCode 展示了一个最小 Agent Runtime 怎样成长为完整 Coding Agent：

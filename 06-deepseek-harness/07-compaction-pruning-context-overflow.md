@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](06-session-log-surface-persistence-fork.md) · [Compaction 文档](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/subsystems/compaction.md) · [Basic Compaction](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/packages/compaction/compaction-basic/src/index.ts) · [课程实验](../examples/06-deepseek-harness/07-compaction-pruning/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+历史 codec 先把旧日志迁到当前 v2 再构造 Session；Surface 次序和迁移后的引用都要按当前语义解释。压缩仍须实际推进 replace generation 才能恢复 overflow，不能因格式升级推断压缩一定成功。
+
+本阶段当前源码为 `d347e70`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `47f9438` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 当 ToolResult 或完整历史超过模型窗口时，Harness 怎样缩短活动 Context，同时保持 call / result 配对、审计历史和错误可见？

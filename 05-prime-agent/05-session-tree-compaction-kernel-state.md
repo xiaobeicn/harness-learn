@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](04-recursive-subagents-and-messaging.md) · [官方 Compaction](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/compaction.md) · [课程实验](../examples/05-prime-agent/05-session-compaction/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+CPython namespace snapshot 直接写 staged file，减少序列化内存副本；超大变量跳过/裁剪由 manifest 记录。摘要、Python namespace、子 Agent ledger 是三类恢复状态，旧 Jupyter snapshot 细节不适用于当前内核。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 一个长任务同时需要审计历史、短模型 Context、持久 Python state 和可恢复子 Agent。Prime Agent 怎样把这些状态分层？

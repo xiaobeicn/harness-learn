@@ -2,6 +2,8 @@
 
 [返回首页](../README.md)
 
+2026-09-07 版本更新保持这些独立教学模型不变。它们验证初版设计不变量，不保证当前上游 API/协议兼容，也不是本轮上游运行测试；尤其 Prime 第 3 课的新 CPython 协议与 DeepSeek Session v2 需结合[版本补充](../source-updates.md)阅读。
+
 示例代码按照“阶段 / 课程”分目录，编号与根目录中的课程保持一致：
 
 ```text
@@ -73,7 +75,7 @@ examples/
 | Claude Code | [第 12 课：Plugin、MCP、Hooks、Skills 扩展与端到端复盘](../04-claude-code/12-extension-system-end-to-end-review.md) | [`index.mjs`](04-claude-code/12-extension-routing/index.mjs) | `node examples/04-claude-code/12-extension-routing/index.mjs` |
 | Prime Agent | [第 1 课：来源边界、Pi 血缘与总体架构](../05-prime-agent/01-source-boundary-and-architecture.md) | [`index.mjs`](05-prime-agent/01-architecture-map/index.mjs) | `node examples/05-prime-agent/01-architecture-map/index.mjs` |
 | Prime Agent | [第 2 课：单工具 RLM Loop 与 Context 构建](../05-prime-agent/02-single-tool-rlm-loop-and-context.md) | [`index.mjs`](05-prime-agent/02-rlm-loop/index.mjs) | `node examples/05-prime-agent/02-rlm-loop/index.mjs` |
-| Prime Agent | [第 3 课：IPython Kernel、Jupyter 通道与 Host Bridge](../05-prime-agent/03-ipython-kernel-and-host-bridge.md) | [`index.mjs`](05-prime-agent/03-host-bridge/index.mjs) | `node examples/05-prime-agent/03-host-bridge/index.mjs` |
+| Prime Agent | [第 3 课：Python REPL、内核协议迁移与 Host Bridge](../05-prime-agent/03-ipython-kernel-and-host-bridge.md) | [`index.mjs`](05-prime-agent/03-host-bridge/index.mjs) | `node examples/05-prime-agent/03-host-bridge/index.mjs` |
 | Prime Agent | [第 4 课：递归子 Agent、Registry 与消息回传](../05-prime-agent/04-recursive-subagents-and-messaging.md) | [`index.mjs`](05-prime-agent/04-subagent-messaging/index.mjs) | `node examples/05-prime-agent/04-subagent-messaging/index.mjs` |
 | Prime Agent | [第 5 课：Session Tree、Compaction 与 Kernel 连续性](../05-prime-agent/05-session-tree-compaction-kernel-state.md) | [`index.mjs`](05-prime-agent/05-session-compaction/index.mjs) | `node examples/05-prime-agent/05-session-compaction/index.mjs` |
 | Prime Agent | [第 6 课：Continual Harness、Refinement 与回滚](../05-prime-agent/06-continual-harness-refinement.md) | [`index.mjs`](05-prime-agent/06-continual-harness/index.mjs) | `node examples/05-prime-agent/06-continual-harness/index.mjs` |

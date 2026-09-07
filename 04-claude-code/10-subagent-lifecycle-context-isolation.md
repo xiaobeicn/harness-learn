@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](09-auto-memory-recall-governance.md) · [官方 Subagents 文档](https://code.claude.com/docs/en/sub-agents) · [课程实验](../examples/04-claude-code/10-subagent-context/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+官方 2.1.261 新增 `--append-subagent-system-prompt-file`，让较长子 Agent 指令从文件读取；这不改变子 Agent 的工具权限或证明旧还原源码含有该入口。
+
+本阶段当前源码为 `b78dd22`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `b78dd22` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 Fresh agent、fork agent、前台 agent、后台 agent 和 worktree isolation 各改变哪一层？Subagent 为什么既能降低主 Context 噪声，又可能增加成本？

@@ -2,6 +2,8 @@
 
 [返回首页](README.md) · [学习路线](00-roadmap.md) · [横向对照](comparison.md) · [自研设计基线](harness-design-summary.md)
 
+2026-09-07 已按[来源版本更新](source-updates.md)修正 Python 内核与持久化相关术语。项目内部标识必须结合对应 commit 阅读。
+
 ## 使用说明
 
 本文统一六个项目学习记录中反复出现的英文术语。表中的“推荐中文”用于理解和中文写作，不要求改写源码标识符、协议字段、产品名称或命令行参数。
@@ -28,7 +30,7 @@
 | Snapshot / Event / State | Snapshot 是某时刻完整视图；Event 是一次变化事实；State 是事件或数据归约后的当前状态。 |
 | Microcompact / Compaction | Microcompact 清理旧的低价值工具结果；Compaction 用摘要和边界重建后续活动 Context。 |
 | Compaction summary / Memory | Compaction summary 服务当前 Session 的继续执行；Memory 保存少量跨会话知识。 |
-| RLM / Continual Harness | RLM 是持久 IPython、Host Bridge 与递归 child 的执行模型；Continual Harness 是进入未来 Context 的持久补充状态。 |
+| RLM / Continual Harness | RLM 是持久 Python REPL、Host Bridge 与递归 child 的执行模型；Continual Harness 是进入未来 Context 的持久补充状态。 |
 | Admission handle / Completion result | Handle 只证明工作被接纳并提供稳定身份；最终结果必须由完成状态、消息或持久记录证明。 |
 | Resume / Fork / Rewind / Rollback | Resume 继续原 Session；Fork 创建新分支；Rewind 改变选中的会话或文件节点；Rollback 才表示撤销真实世界副作用。 |
 | Worktree isolation / OS Sandbox | Worktree 只隔离 Git 工作目录；OS Sandbox 约束文件、网络、进程及子进程能力。 |
@@ -56,8 +58,8 @@
 | Profile | 部署组合档 | DeepSeek Harness home 中组合 Bundles、Patch 与 agent preset 的具名部署入口。 |
 | Bundle | 插件组合包 | 可复用的一组 Cordis Patch，用于装配 base、web-app 或 headless 等能力。 |
 | Patch | 组合补丁 | 按稳定 id 增删或替换 composition row 的配置层；固定版本同 id config 为整段替换。 |
-| RLM | 递归语言模型 / RLM 编程模型 | Prime Agent 中以持久 IPython 操作 Context、调用能力并可递归创建 child Agent 的执行方式。 |
-| Persistent Kernel | 持久计算内核 | 跨 Tool Calls 与 Compaction 保留 Python namespace 的长寿命 IPython 进程。 |
+| RLM | 递归语言模型 / RLM 编程模型 | Prime Agent 中以持久 Python REPL 操作 Context、调用能力并可递归创建 child Agent 的执行方式。 |
+| Persistent Kernel | 持久计算内核 | 跨 Tool Calls 与 Compaction 保留 Python namespace 的长寿命 Python 进程（Prime Agent 当前为 CPython REPL）。 |
 | Host Bridge | 宿主桥接 | Kernel 通过 typed request 请求 Provider、Session、Goal 或 child 等 Host 权威操作的协议边界。 |
 | Agent Loop / Loop | 智能体循环 / 执行循环 | 重复构造请求、调用模型、执行工具、回灌结果并判断是否继续的控制结构。 |
 | Query | 一次查询执行 | 从一条输入开始，由 Harness 驱动到停止、失败或等待用户的完整执行链。 |
@@ -451,8 +453,8 @@
 | 源码名 | 中文理解 |
 | --- | --- |
 | `AgentSession` | Provider、Context、工具、队列、Compaction、Goal 与 child lifecycle 的权威 Session owner。 |
-| `KernelManager` | 启动并管理 IPython、Jupyter sockets、cell serialization、Host request 与 namespace snapshot。 |
-| `host.request` | Python shim 经 Jupyter comm 发给 TypeScript Host 的 typed request target。 |
+| `ReplKernelManager` | 当前 Prime Agent 的 CPython 进程、JSONL stdio、cell serialization、Host request 与 namespace snapshot 管理器；旧 `KernelManager`/Jupyter 路径只属于初版。 |
+| `host_request` / `host_reply` | 当前 Prime Agent REPL JSONL 的类型化宿主请求与回复；旧 `host.request` Jupyter comm target 只属于初版。 |
 | `rlm()` / `rlm.run` | Kernel 侧 child admission API 与对应 Host request；返回 handle，不返回 child 最终答案。 |
 | `SessionManager` | 读写 append-only JSONL tree、branch 与 Session metadata 的持久化组件。 |
 | Continual Harness state | local / global 的 prompt、memory、skill、subagent 补充条目集合。 |
@@ -480,6 +482,27 @@
 | `SESSION_FORMAT_VERSION` | 固定版本为 `0`；不支持的持久格式会被拒绝。 |
 | Activation | continuable child 的 process-local live owner；child Session 本身可持久恢复。 |
 | `dynamicCordisRunner` | 管理会话拥有的进程内动态 Cordis 定义与 run / stop 生命周期的 Service。 |
+
+## 十三、本轮新增与修订术语（2026-09-07）
+
+| English / 标识符 | 推荐中文 | 精确边界 |
+| --- | --- | --- |
+| CPython REPL | CPython 交互执行内核 | Prime Agent 当前保留 namespace 与 asyncio loop，模型工具名仍为 ipython；不支持原 IPython magics。 |
+| BashHandle | Shell 后台句柄 | 可观察、等待、取消命令；一次性 await 与显式后台使用的取消所有权不同。 |
+| Lane | 执行通道 | Pi Durable Harness 的会话树视图与操作执行边界；不能简单等同 OS 线程。 |
+| Effect gate | 副作用闸门 | 控制 durable intent 与实际执行的交接；不使任意外部写入自动 exactly-once。 |
+| Spawn ledger | 子任务接纳账本 | Prime Daemon 持有的 append-only 家族拓扑事实，区别于扫描 Session 文件得到的视图。 |
+| Direct worker transport | Worker 直连传输 | 控制面授权/发现后，会话数据直达 Worker；不转移 Supervisor 的控制权威。 |
+| PTC / run_code | 程序化工具调用 | DeepSeek 当前模式名 ptc，用 SDK 在程序内调用工具；替代旧 code 模式命名。 |
+| Assistant attempt | 模型请求尝试 | DeepSeek v2 为没有形成 Surface message 的已结算尝试保存 stream；不虚构模型可见消息。 |
+| Transient frame | 临时实时帧 | 提供实时展示，但在持久结算前可能因进程崩溃而丢失。 |
+| Semantic checkpoint | 语义检查点 | 在请求、工具副作用与 Step 边界 flush；存储 backend 与检查点时机是不同职责。 |
+| Write-ownership lease | 写入所有权租约 | 阻止同一 Session 并发 writer；进程退出释放，不是模型工具的安全 Sandbox。 |
+| Adjacent migration edge | 相邻版本迁移边 | 把一个冻结格式转换到下一代；DeepSeek 静态组合 v0→v1→v2，不能随运行时插件改变链。 |
+| TOOL_OUTCOME_UNKNOWN | 工具结果未知 | 已保存 call 但缺少 result，无法证明副作用未发生，不自动重试写操作。 |
+| Synchronous approval / async monitoring | 同步审批 / 异步监控 | 前者在动作执行前决策；后者可能在动作发生后暂停任务，不能替代执行授权。 |
+
+证据入口：[Pi](01-pi-mono/source-update-2026-09-07.md)、[Codex](03-codex-cli/source-update-2026-09-07.md)、[Prime](05-prime-agent/source-update-2026-09-07.md)、[DeepSeek](06-deepseek-harness/source-update-2026-09-07.md)。
 
 ## 维护规则
 

@@ -2,6 +2,12 @@
 
 [返回本阶段目录](README.md) · [上一课](03-ipython-kernel-and-host-bridge.md) · [官方 RLM Programming Model](https://github.com/PrimeIntellect-ai/prime-agent/blob/71ca6cfd1a2f7205ca0ec1baa65d10d0ed88f6e8/packages/coding-agent/docs/rlm.md) · [课程实验](../examples/05-prime-agent/04-subagent-messaging/index.mjs)
 
+## 当前版本阅读提示（2026-09-07）
+
+子任务 admission/completion 仍分离；家族拓扑发现改由 supervisor-owned append-only spawn ledger 管理，状态通过 roster subscription 推送。递归取消使用 visited 遍历，避免重复处理。
+
+本阶段当前源码为 `b9cf467`。本轮核对的变化、证据与限制见[版本学习补充](source-update-2026-09-07.md)。以下原有推导、源码 permalink 和实验记录以初版 `71ca6cf` 为历史基线；与上方修正冲突时按当前修正阅读。
+
 ## 核心问题
 
 `await rlm("subtask")` 为什么只返回接纳句柄而不是答案？子 Agent 怎样独立运行、保留身份、回传结果并归集用量？

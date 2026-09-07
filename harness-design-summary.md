@@ -2,6 +2,8 @@
 
 [返回首页](README.md) · [学习路线](00-roadmap.md) · [横向对照](comparison.md)
 
+版本核验：**2026-09-07**。本轮修正与新增能力的证据集中在[来源更新记录](source-updates.md)及各阶段学习补充；原实验记录不作为新版实测。
+
 ## 文档目标
 
 本文基于现有六个阶段的学习记录，提炼适合自研 Harness Agent 的设计原则。目标不是完整复刻某一个项目，而是组合各自最成熟的部分：
@@ -30,7 +32,7 @@ DeepSeek Harness → Cordis capability seams、可逆插件生命周期与模型
 | OpenCode | Durable Session、Client / Server、可靠事实与 UI projection 分层 | 支撑多入口、后台执行、恢复和复杂产品状态。 |
 | Codex CLI | Approval 与 OS Sandbox 正交、canonical Permission Profile | 建立真正可信的最小权限执行底座。 |
 | Claude Code | Context admission、Compaction、Session DAG、Memory、Subagent 和扩展生命周期 | 支撑长任务、长期知识和复杂 Agent 编排。 |
-| Prime Agent | Persistent IPython、typed Host Bridge、RLM、Daemon 与 Continual Harness | 支撑程序化推理、递归委派、断线恢复和可审计的持续改进。 |
+| Prime Agent | Persistent CPython REPL、typed Host Bridge、RLM、Daemon 与 Continual Harness | 支撑程序化推理、递归委派、断线恢复和可审计的持续改进。 |
 | DeepSeek Harness | Cordis Service / Fiber / Effect、scoped composition 与 durable Surface | 让核心与扩展共享可组合、可撤销、可观测的生命周期。 |
 
 ### Pi Mono：最干净的 Runtime 内核
@@ -209,14 +211,14 @@ Prime Agent 最值得学习的是在“高表达力 Kernel”与“权威 Host�
 ```text
 模型只看到 ipython
   → 持久 namespace 组合文件、Shell、Skill 与数据处理
-  → host.request 只请求显式注册的权威操作
+  → host_request / host_reply 只请求显式注册的权威操作
   → AgentSession 执行 Provider、Session、Goal、child 与 scheduling mutation
 ```
 
 - Python namespace 跨 tool calls 与 Compaction 保持，适合把大 Context 变成可查询变量。
-- `%%bash` 使用临时 subshell，不把 Shell cwd / variables 假装成持久状态。
+- CPython REPL 使用 `bash()` 与 `os.chdir()` 等普通 Python API；IPython magic 已移除。一次性 await 与后台 BashHandle 要区分取消所有权。
 - Python shim 不持有 Provider credential 或 Session transcript。
-- active cell 的 Host reply 经 Jupyter control channel 返回，避免 shell channel 自等待死锁。
+- JSONL stdio 协议让 `host_reply` 与 `interrupt` 旁路串行普通请求；协议帧与用户输出分开，无可靠归属的输出不冒充当前 cell。
 - Host handler 是 typed allowlist；未知 request 显式失败。
 
 这种设计可作为自研 Harness 的可选 programmatic control plane。它不应取代 ToolResult contract、权限检查和 durable settlement。
@@ -225,7 +227,7 @@ Prime Agent 最值得学习的是在“高表达力 Kernel”与“权威 Host�
 
 - `rlm()` 返回 child admission handle，不把接纳误写成完成。
 - 每个 child 使用独立 AgentSession、Context、transcript 与可选 Kernel。
-- 每棵 root Session tree 由一个 Worker 持有，Supervisor 只负责路由、attachment、health 和恢复。
+- 每棵 root Session tree 由一个 Worker 持有，Supervisor 管控制、spawn ledger 与恢复；session plane 可使用授权后的 Worker 直连。
 - Daemon event cursor 使用 `{generation, sequence}`；replay 不足时以一致 snapshot 重建 client baseline。
 - command journal 可以复用已知完成结果，但 received-without-result 必须保持 uncertain，不能盲目重放副作用。
 - Goal 保存 durable objective；Autonomous 决定是否立即 continuation；Heartbeat / Schedule 决定何时重新进入 Session。
@@ -242,7 +244,7 @@ Continual Harness 只保存 prompt、memory、skill、subagent 四类补充 entr
 4. 做 baseline conflict check、原子保存并写 history。
 5. 用 before / after snapshot 支持补充状态 rollback。
 
-这使“持续改进”成为可审计状态变更，而不是让模型任意重写自身核心指令。
+`session_before_refine` 可以替换规划提案或跳过一轮，但所有 edits 仍经正常 apply validation；rollback 不调用该 hook。持续改进因此可以扩展规划来源，同时保持写入约束。
 
 证据与详细流程见 [Prime Agent 阶段目录](05-prime-agent/README.md)和[端到端复盘](05-prime-agent/10-end-to-end-review.md)。
 
@@ -270,9 +272,9 @@ Profile + Bundles + Patch overlays
 
 #### 模型可见事实与 Session Surface
 
-DeepSeek Harness 把“model-visible means logged”落实到请求边界：Runtime Context 变化形成 durable snapshot，request header 固化 provider / model / system / tools，raw chunks 与规范 assistant message 分开保存。
+DeepSeek Harness 固化 Runtime Context 与 request header；Session v2 将已结算的 compact timed stream 嵌入 `assistant/message` 或 `assistant/attempt`。实时 `agent/assistant-stream` frames 在结算前不保证持久化，不能把 UI 已显示等同于磁盘已保存。
 
-Session 是 append-only event log，Surface 再用 append / replace 决定活动模型历史。Compaction shadow 旧节点但不删除审计事件；只有 Surface generation 真正推进后才重试 context overflow。
+Session 是 append-only event log，Surface 再用 append / replace 决定活动模型历史。当前 JSONL/Zstd backend 通过 read/write handle、writer lease 和 semantic checkpoint 管理落盘；v0/v1 由静态迁移链发布为当前 v2，未知结果不得自动重放。Compaction shadow 旧节点但不删除审计事件；只有 Surface generation 真正推进后才重试 context overflow。
 
 这比直接改写 messages 数组更适合动态 composition，因为每一次 Prompt、Tool view 与 Context 变化都能解释。
 
@@ -474,11 +476,11 @@ flowchart TD
 
 ## 六、不能直接照搬的边界
 
-- Pi Mono 第一阶段没有提供生产级 Session 持久化或 OS Sandbox。
+- Pi Mono 第一阶段的最小模型没有提供生产级 Session 持久化或 OS Sandbox。
 - OpenCode 的 Permission 不是 OS Sandbox；Tool call 与外部副作用之间没有通用 exactly-once，固定版本全局事件流也不能可靠补齐断线缺口。
 - Codex CLI 阶段聚焦 Sandbox 主线，没有重新验证完整 Context、Session 和 Multi-Agent；三平台实验步骤已提供，但尚未在本仓库记录真实执行结果。
 - Claude Code 的公开功能以官方文档为准；内部实现分析来自非官方 source-map 还原，只适合借鉴设计，不能当作官方稳定契约。
-- Prime Agent 的 Worker、Kernel、Host allowlist 与 Extension Hook 都不是 OS Sandbox；固定版本上游 runtime 未安装或真实运行，Daemon 文档标题的 v4 也滞后于源码 v7 / schema 15。
+- Prime Agent 的 Worker、Kernel、Host allowlist 与 Extension Hook 都不是 OS Sandbox；固定版本上游 runtime 未安装或真实运行，Daemon 文档标题的 v4 也滞后于源码 v7 / schema 27；新增 durable Harness 或实验 backend 的设计说明不自动构成生产保证。
 - DeepSeek Harness 处于 developer preview；固定版本上游 workspace、Provider、MCP、Web UI 与跨平台 Sandbox 未真实运行。MCP 只桥接 Tools，动态 Cordis 定义只存进程内，`node:vm` 不是安全边界。
 - Conversation rewind、文件恢复和外部世界状态回滚是三件事，任何一个项目都不能自动提供通用事务回滚。
 
@@ -496,3 +498,15 @@ Pi Mono 的小内核
 ```
 
 真正优秀的 Harness 不是工具最多，而是每一层都有清晰、可验证的责任：Composition 决定当前能力图，模型提出意图，Runtime 控制 continuation，Programmatic Kernel 组合计算，typed Host 保留权威操作，Tool contract 描述副作用，Approval 处理授权，Sandbox 强制边界，Event Log 保存事实，Context Manager 选择下一轮真正需要的信息，Fiber lifecycle 则保证动态贡献能够完整撤销。
+
+
+## 七、本轮更新补充的自研要求
+
+1. **把 continuation preparation 与 completion cleanup 分开。** 准备下一轮只在确实继续时运行，结束清理由明确的终止事件负责；覆盖压缩期间新输入和终止钩子顺序。
+2. **压缩不能割裂语义条目或忘记仍有效的约束。** 旧摘要与新对话分别输入，冲突以新事实为准；recent budget 允许因完整条目边界而未用满。
+3. **长寿命进程必须保留授权来源。** 首次 spawn、后续 stdin、远程执行器路径和权限恢复都可能改变动作含义，审批不能只检查初始命令。
+4. **区分实时、已结算与已落盘。** 以检查点确保模型请求和副作用 intent 先持久化；明确硬崩溃会丢失什么。没有结果的外部写入保持 unknown，使用业务幂等键或 reconciliation。
+5. **迁移器与 writer ownership 属于存储契约。** 冻结旧 reader、逐代迁移、保留历史、独占发布；lease 管活跃 writer，不能把删除锁文件当作常规恢复流程。
+6. **按证据决定扩展成熟度。** 单次 Python 子进程不等于持久 REPL，配置适配不等于完整运行时迁移，规范中的未完成项不写进已交付能力表。
+
+这些要求来自各阶段本次补充的静态证据；真实上线前仍应针对自己的实现验证故障窗口、权限边界与迁移数据。
